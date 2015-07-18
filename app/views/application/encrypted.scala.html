@@ -1,0 +1,21 @@
+@(hash: String)
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<h1>Here's that encrypted with a new salt:</h1>
+<p>@hash</p>
+
+<h2>Check a password matches the last one</h2>
+<form action="matches">
+    <input type="password" name="pw" />
+    <button type="submit">Check</button>
+</form>
+
+</body>
+</html>

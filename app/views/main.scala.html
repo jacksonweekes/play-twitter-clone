@@ -1,0 +1,47 @@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+            <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+            <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")">
+
+            <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <header class="navbar navbar-fixed-top navbar-inverse">
+            <div class="container">
+                <a href="@routes.Application.index()" id="logo">twatter</a>
+                <nav>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href='@routes.Application.index()'>Home</a></li>
+                        <li><a href='#'>Help</a></li>
+                        <li><a href='#'>About</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="container">
+            @content
+            <footer class="footer">
+                <small>
+                    Twatter by Jackson Cleary
+                </small>
+                <nav>
+                    <ul>
+                        <li><a href='@routes.Application.about()'>About</a></li>
+                        <li><a href='#'>Contact</a></li>
+                        <li><a href='#'>News</a></li>
+                    </ul>
+                </nav>
+            </footer>
+        </div>
+    </body>
+</html>

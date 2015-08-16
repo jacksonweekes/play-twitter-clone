@@ -1,0 +1,13 @@
+@(users: Array[model.User])
+
+@main("Users") {
+    <h1>Users</h1>
+    <ul>
+        @if(users.length == 0) {
+            <p>There are not currently any users.</p>
+        }
+        @for(user <- users){
+            <li>User: @user.getEmail, Password Digest: @user.getPasswordDigest</li>
+        }
+    </ul>
+}

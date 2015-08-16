@@ -1,0 +1,26 @@
+@(error: String)
+
+@main("Login") {
+    <h1>Login</h1>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form action="@controllers.UserController.login" method="post">
+                <div class="form-controller">
+                    <label for="email">Email</label><br />
+                    <input type="email" name="email" /><br />
+                </div>
+                <br />
+                <div class="form-controller">
+                    <label for="password">Password</label><br />
+                    <input type="password" name="password" />
+                </div>
+                <br />
+                @if(error != null) {
+                    <div class="error">@error</div>
+                }
+                <br />
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+}

@@ -1,0 +1,10 @@
+@(user: model.User)
+
+@main(user.getEmail) {
+    <h1>@user.getEmail Homepage</h1>
+    <ul>
+        @for(session <- user.getAllSessions) {
+            <li>IP: @session.getIpAddress ID: @session.getId</li>
+        }
+    </ul>
+}

@@ -1,0 +1,28 @@
+@()
+@import play.mvc.Http.Context.Implicit.session
+<header class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+        @if(UserController.getUserFromSessionID(session.get(SessionController.SESSION_VAR)) != null) {
+            <a href="@routes.UserController.showUser(
+            UserController.getUserFromSessionID(session().get(SessionController.SESSION_VAR)).getUsername
+            )" id="logo">twatter</a>
+            <nav>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href='@routes.SessionController.deleteSession()'>Logout</a></li>
+                    <li><a href='@routes.Application.help()'>Help</a></li>
+                    <li><a href='@routes.Application.about()'>About</a></li>
+                </ul>
+            </nav>
+        } else {
+            <a href="@routes.Application.index()" id="logo">twatter</a>
+            <nav>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href='@routes.SessionController.newSession()'>Login</a></li>
+                    <li><a href='@routes.Application.help()'>Help</a></li>
+                    <li><a href='@routes.Application.about()'>About</a></li>
+                </ul>
+            </nav>
+        }
+
+    </div>
+</header>

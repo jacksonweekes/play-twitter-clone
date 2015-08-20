@@ -2,9 +2,9 @@ package controllers;
 
 import model.*;
 import model.Exceptions.ApplicationException;
-import model.Exceptions.ErrorCode;
 import play.mvc.*;
-import views.html.users.register;
+import static play.mvc.Results;
+import views.html.users.*;
 
 import java.util.Map;
 
@@ -13,7 +13,8 @@ import java.util.Map;
  */
 public class UserController extends Controller {
 
-    protected static UserService getUserService() {
+    //
+    public static DataInterface getUserService() {
         return UserService.instance;
     }
 
@@ -34,25 +35,29 @@ public class UserController extends Controller {
                 flash("error", e.getErrorCode().getDescription());
                 return redirect(routes.UserController.newUser());
         }
-        SessionsController.createSession(u);
-        return redirect("/users?name=" + u.getUsername());
+        session(SessionController.SESSION_VAR, u.createNewSession());
+        return showUser(u.getUsername());
     }
 
-    public static Result showUser(String name) {
-        if (name == null) {
+    public static Result showUser(String username) {
+        if (username == null) {
             return index();
         }
-        User u = getUserService().getUser(name);
+        User u = getUserService().getUserByUsername(username);
         if(u == null) {
-            flash("error", name + "does not exist.");
+            flash("error", username + "does not exist.");
             return redirect(routes.UserController.showUser(null));
         }
         return ok(views.html.users.user.render(u));
     }
 
     public static Result index() {
-        User[] users = getUserService().getAllUsers();
+        User[] users = getUserService().getUserArray();
         return ok(views.html.users.user_index.render(users));
+    }
+
+    public static User getUserFromSessionID(String sessionID) {
+        return getUserService().getUserBySessionID(sessionID);
     }
 
 }

@@ -1,6 +1,7 @@
 package model;
 
 import org.mindrot.jbcrypt.BCrypt;
+import play.mvc.Controller;
 
 import java.util.HashMap;
 
@@ -23,25 +24,25 @@ public class User {
         return username;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
-    public String getPasswordDigest() {
-        return passwordDigest;
+    // Check if email and password given match current user
+    public boolean isUser(String email, String password) {
+        return (email.equals(this.email) && isPassword(password));
     }
 
-    // Checks if given password is the same as stored password
-    public boolean isPassword(String password) {
-        if(passwordDigest.equals(digest(password))) {
-            return true;
-        }
-        return false;
-    }
-
-    // Add new session
-    public void addNewSession(Session session) {
+    // Creates a new Session and returns the sessionID
+    public String createNewSession() {
+        Session session = new Session(Controller.request().remoteAddress());
         sessions.put(session.getId(), session);
+        return session.getId();
+    }
+
+    public void deleteSession(String sessionID) {
+        sessions.remove(sessionID);
     }
 
     public Session[] getAllSessions() {
@@ -55,5 +56,10 @@ public class User {
 
     private static String digest(String input) {
         return BCrypt.hashpw(input, BCrypt.gensalt());
+    }
+
+    // Checks if given password is the same as stored password
+    public boolean isPassword(String password) {
+        return BCrypt.checkpw(password, passwordDigest);
     }
 }

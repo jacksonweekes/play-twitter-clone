@@ -7,17 +7,17 @@ import model.Exceptions.*;
 /**
  * Created by jackson on 13/08/15.
  */
-public class UserService {
+public class UserService implements DataInterface {
     public static final UserService instance = new UserService();
     private ConcurrentHashMap<String, User> users = new ConcurrentHashMap<String, User>();
 
-    public User[] getAllUsers() {
+    // Returns array of all registered users
+    public User[] getUserArray() {
         return users.values().toArray(new User[users.size()]);
     }
 
-    // Register new user. Returns null if email already exists in database
-    // otherwise returns new user.
-    public User addUser(User u) throws ApplicationException {
+    // Register new user. Throws exception if new user conflicts with already registered user
+    public void addUser(User u) throws ApplicationException {
         Collection<User> userCollection = users.values();
         for(User user: userCollection) {
             if(user.getUsername().equals(u.getUsername())) {
@@ -28,30 +28,26 @@ public class UserService {
             }
         }
         users.put(u.getUsername(), u);
-        return u;
     }
 
     // Finds user by id. Returns null if user id does not exist.
-    public User getUser(String username) {
+    public User getUserByUsername(String username) {
         return users.get(username);
     }
 
-    // Finds user by email and password.
-    public User getUser(String email, String password) throws ApplicationException {
+    // Finds user by email and password. Returns null if email/password combination is invalid
+    public User getUserByEmailAndPassword(String email, String password) {
         Collection<User> userCollection = users.values();
         for(User user: userCollection) {
-            if(user.getEmail().equals(email)) {
-                if(user.isPassword(password)) {
-                    return user;
-                } else {
-                    throw new ApplicationException(ErrorCode.INCORRECT_PASSWORD);
-                }
+            if(user.isUser(email, password)) {
+                return user;
             }
         }
-        throw new ApplicationException(ErrorCode.EMAIL_NOT_FOUND);
+        return null;
     }
 
-    public User getUserBySession(String sessionId) {
+    // Finds user by given sessionID, returns null if ID does not belong to any user
+    public User getUserBySessionID(String sessionId) {
         Collection<User> userCollection = users.values();
         for (User user : userCollection) {
             if (user.hasSession(sessionId)) {
@@ -59,15 +55,5 @@ public class UserService {
             }
         }
         return null;
-    }
-
-    public boolean isLoggedIn(String sessionId) {
-        Collection<User> userCollection = users.values();
-        for(User user: userCollection) {
-            if(user.hasSession(sessionId)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

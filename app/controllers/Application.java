@@ -1,29 +1,27 @@
 package controllers;
 
+import model.*;
 import play.*;
 import play.mvc.*;
 import model.BCryptExample;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
+import views.html.static_pages.*;
 
 public class Application extends Controller {
 
-    public static Result encrypt(String pw) {
-        return ok(views.html.application.encrypted.render(BCryptExample.encrypt(pw)));
-    }
-
-    public static Result matches(String pw) {
-        return ok(views.html.application.matches.render(BCryptExample.matchesLastEncrypted(pw)));
-    }
-
-    public static Result oldIndex() {
-        return ok(views.html.application.index.render());
-    }
-
     // Static page controllers
     public static Result index() {
-        return ok(index.render(""));
+        User user = UserController
+                        .getUserService()
+                        .getUserBySessionID(session()
+                                .get(SessionController.SESSION_VAR));
+        if(user == null) {
+            return ok(index.render(""));
+        } else {
+            return redirect(routes.UserController.showUser(user.getUsername()));
+        }
     }
 
     public static Result about() {

@@ -3,25 +3,24 @@ package model;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * Simple User class, will be used to store user_index details when they sign up.
  */
 public class User {
 
-    private String id, email, passwordDigest;
+    private String username, email, passwordDigest;
     private HashMap<String, Session> sessions;
 
-    public User(String email, String password) {
-        this.id = UUID.randomUUID().toString();
+    public User(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.passwordDigest = digest(password);
         this.sessions = new HashMap<>();
     }
 
-    public String getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
     public String getEmail() {
@@ -50,8 +49,8 @@ public class User {
     }
 
     // Check if session belongs to user
-    public boolean hasSession(String id) {
-        return sessions.containsKey(id);
+    public boolean hasSession(String sessionID) {
+        return sessions.containsKey(sessionID);
     }
 
     private static String digest(String input) {

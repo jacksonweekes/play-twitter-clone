@@ -1,10 +1,11 @@
+@import controllers.SessionsController.login
 @(error: String)
 
 @main("Login") {
     <h1>Login</h1>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <form action="@controllers.UserController.login" method="post">
+            <form action="@controllers.SessionsController.login()" method="post">
                 <div class="form-controller">
                     <label for="email">Email</label><br />
                     <input type="email" name="email" /><br />

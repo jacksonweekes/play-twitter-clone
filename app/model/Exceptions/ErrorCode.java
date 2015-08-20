@@ -7,7 +7,7 @@ public enum ErrorCode {
     DUPLICATE_EMAIL(0, "This email address has already been registered."),
     DUPLICATE_USERNAME(1, "This username is already taken."),
     EMAIL_NOT_FOUND(2, "This email address has not been registered."),
-    INCORRECT_PASSWORD(3, "Password does not match one on file for given username.");
+    INCORRECT_PASSWORD(3, "Incorrect email/password combination.");
 
     private final int code;
     private final String description;

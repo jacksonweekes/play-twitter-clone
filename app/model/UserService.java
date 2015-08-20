@@ -1,7 +1,6 @@
 package model;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import model.Exceptions.*;
 
@@ -15,22 +14,26 @@ public class UserService {
     public User[] getAllUsers() {
         return users.values().toArray(new User[users.size()]);
     }
+
     // Register new user. Returns null if email already exists in database
     // otherwise returns new user.
-    public User registerUser(User u) throws ApplicationException {
+    public User addUser(User u) throws ApplicationException {
         Collection<User> userCollection = users.values();
         for(User user: userCollection) {
+            if(user.getUsername().equals(u.getUsername())) {
+                throw new ApplicationException(ErrorCode.DUPLICATE_USERNAME);
+            }
             if(user.getEmail().equals(u.getEmail())) {
                 throw new ApplicationException(ErrorCode.DUPLICATE_EMAIL);
             }
         }
-        users.put(u.getId(), u);
+        users.put(u.getUsername(), u);
         return u;
     }
 
     // Finds user by id. Returns null if user id does not exist.
-    public User getUser(String id) {
-        return users.get(id);
+    public User getUser(String username) {
+        return users.get(username);
     }
 
     // Finds user by email and password.
@@ -46,5 +49,25 @@ public class UserService {
             }
         }
         throw new ApplicationException(ErrorCode.EMAIL_NOT_FOUND);
+    }
+
+    public User getUserBySession(String sessionId) {
+        Collection<User> userCollection = users.values();
+        for (User user : userCollection) {
+            if (user.hasSession(sessionId)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public boolean isLoggedIn(String sessionId) {
+        Collection<User> userCollection = users.values();
+        for(User user: userCollection) {
+            if(user.hasSession(sessionId)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

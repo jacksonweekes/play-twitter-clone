@@ -28,6 +28,11 @@
                 </nav>
             </div>
         </header>
+        @if(!flash.isEmpty) {
+            @flash.map{ case(k, v) =>
+                <div class=@k>@v</div>
+            }
+        }
         <div class="container">
             @content
             <footer class="footer">

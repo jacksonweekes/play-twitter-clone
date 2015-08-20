@@ -7,7 +7,7 @@
             <p>There are not currently any users.</p>
         }
         @for(user <- users){
-            <li>User: @user.getEmail, Password Digest: @user.getPasswordDigest</li>
+            <li><a href="/users?name=@user.getUsername">User: @user.getUsername</a></li>
         }
     </ul>
 }

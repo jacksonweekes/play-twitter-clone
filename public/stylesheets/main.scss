@@ -191,3 +191,15 @@ aside {
     margin-left: 40px;
   }
 }
+
+#mainflash {
+  text-align: center;
+}
+
+.success {
+  color: $state-success-text;
+}
+
+.error {
+  color: $state-danger-text;
+}

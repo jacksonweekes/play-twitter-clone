@@ -131,4 +131,13 @@ aside {
   #searchArea button {
     margin-left: 40px; }
 
+#mainflash {
+  text-align: center; }
+
+.success {
+  color: #3c763d; }
+
+.error {
+  color: #a94442; }
+
 /*# sourceMappingURL=main.css.map */

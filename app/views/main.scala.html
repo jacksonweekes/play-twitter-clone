@@ -4,16 +4,18 @@
 
 <html>
     @_header(title)
-    <body>
-        @_navbar()
-        @if(!flash.isEmpty) {
-            @flash().map{ case(k, v) =>
-                <div class=@k>@v</div>
-            }
+<body>
+    @_navbar()
+    @if(!flash.isEmpty) {
+        <div id="mainflash">
+        @flash().map { case (k, v) =>
+        <div class=@k>@v</div>
         }
-        <div class="container">
-            @content
-            @_footer()
         </div>
-    </body>
+    }
+    <div class="container">
+        @content
+        @_footer()
+</div>
+</body>
 </html>

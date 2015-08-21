@@ -19,4 +19,7 @@ GET         /users               controllers.UserController.showUser(name ?= nul
 # Sessions
 GET         /login               controllers.SessionController.newSession()
 POST        /login               controllers.SessionController.createSession()
-GET         /logout              controllers.SessionController.deleteSession()
+GET         /logout              controllers.SessionController.deleteSession(sessionID ?= null)
+
+# Posts
+POST        /createpost          controllers.PostController.createPost()

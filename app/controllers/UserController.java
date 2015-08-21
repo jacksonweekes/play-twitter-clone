@@ -13,11 +13,14 @@ import java.util.Map;
 public class UserController extends Controller {
 
     //
-    public static DataInterface getUserService() {
+    public static UserDataInterface getUserService() {
         return UserService.instance;
     }
 
     public static Result newUser() {
+        if(getUserService().getUserBySessionID(session(SessionController.SESSION_VAR)) != null) {
+            return redirect(routes.Application.index());
+        }
         return ok(register.render());
     }
 
@@ -39,6 +42,7 @@ public class UserController extends Controller {
         return redirect(routes.Application.index());
     }
 
+    @Security.Authenticated(CustomAuthenticator.class)
     public static Result showUser(String username) {
         if (username == null) {
             return index();

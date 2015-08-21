@@ -1,7 +1,8 @@
 /* mixins, variables etc */
 /* universal */
 body {
-  padding-top: 60px; }
+  padding-top: 60px;
+  background-color: #DDDDDF; }
 
 section {
   overflow: auto; }
@@ -55,7 +56,8 @@ footer {
   margin-top: 45px;
   padding-top: 5px;
   border-top: 1px solid #eaeaea;
-  color: #777777; }
+  color: #777777;
+  clear: both; }
   footer a {
     color: #555555; }
     footer a:hover {
@@ -68,5 +70,49 @@ footer {
     footer ul li {
       float: left;
       margin-left: 15px; }
+
+aside {
+  float: left; }
+  aside section.user_info {
+    margin-top: 20px; }
+  aside section {
+    padding: 10px 0;
+    margin-top: 20px; }
+    aside section:first-child {
+      border: 0;
+      padding-top: 0; }
+    aside section span {
+      display: block;
+      margin-bottom: 3px;
+      line-height: 1; }
+    aside section h1 {
+      font-size: 1.4em;
+      text-align: left;
+      letter-spacing: -1px;
+      margin-bottom: 0px;
+      margin-top: 0px; }
+    aside section h2 {
+      text-align: left;
+      font-size: 1em; }
+    aside section h3 {
+      text-align: left;
+      font-size: 1em;
+      margin-top: 100px; }
+    aside section li {
+      font-size: .8em;
+      text-align: left; }
+
+.post {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0; }
+  .post li {
+    list-style-type: none;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: lightsteelblue;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px; }
 
 /*# sourceMappingURL=main.css.map */

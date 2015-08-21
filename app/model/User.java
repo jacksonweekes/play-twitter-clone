@@ -4,6 +4,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import play.mvc.Controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Simple User class, will be used to store user_index details when they sign up.
@@ -14,8 +15,8 @@ public class User {
     private HashMap<String, Session> sessions;
 
     public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
+        this.username = username.toLowerCase();
+        this.email = email.toLowerCase();
         this.passwordDigest = digest(password);
         this.sessions = new HashMap<>();
     }
@@ -24,14 +25,13 @@ public class User {
         return username;
     }
 
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
 
     // Check if email and password given match current user
     public boolean isUser(String email, String password) {
-        return (email.equals(this.email) && isPassword(password));
+        return (email.equals(this.email.toLowerCase()) && isPassword(password));
     }
 
     // Creates a new Session and returns the sessionID

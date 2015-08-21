@@ -1,0 +1,17 @@
+@(user: model.User)
+@import play.mvc.Http.Context.Implicit._;
+
+<ul>
+@for(userSession <- user.getAllSessions) {
+    @if(userSession.getId == session().get(SessionController.SESSION_VAR)) {
+        <li>
+            @userSession.getIpAddress (current)
+        </li>
+    } else {
+        <li>
+            @userSession.getIpAddress
+            <a href="@routes.SessionController.deleteSession(userSession.getId)">(delete)</a>
+        </li>
+    }
+}
+</ul>

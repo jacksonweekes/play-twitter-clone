@@ -1,5 +1,6 @@
 package model;
 
+import static model.UserService.instance;
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -10,7 +11,7 @@ public class PostTest {
     private Post post;
     @Before
     public void setUp() {
-        post = new Post("This is a #test post, #YOLO!");
+        post = new Post("Bob", "This is a #test post, #YOLO!");
     }
 
     @Test
@@ -33,5 +34,12 @@ public class PostTest {
         assertEquals("words", tags[0]);
         assertEquals("hash", tags[1]);
         assertEquals("extracted", tags[2]);
+    }
+
+    @Test
+    public void testHasTag() throws Exception {
+        assertTrue(post.hasTag("test"));
+        assertTrue(post.hasTag("YOLO"));
+        assertFalse(post.hasTag("tigerblood-"));
     }
 }

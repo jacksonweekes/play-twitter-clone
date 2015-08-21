@@ -5,7 +5,7 @@ import model.Exceptions.ApplicationException;
 /**
  * Created by jackson on 20/08/15.
  */
-public interface DataInterface {
+public interface UserDataInterface {
     void addUser(User user) throws ApplicationException;
     User[] getUserArray();
     User getUserByUsername(String username);

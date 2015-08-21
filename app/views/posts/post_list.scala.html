@@ -1,0 +1,9 @@
+@(user: model.User)
+
+<ul class="post">
+    @for(post <- PostController.getPostService.getAllPosts(user.getUsername)) {
+        <li>
+            @post.getMessage
+        </li>
+    }
+</ul>

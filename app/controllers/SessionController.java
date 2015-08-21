@@ -31,8 +31,13 @@ public class SessionController extends Controller {
     }
 
     //
-    public static Result deleteSession() {
-        String sessionID = session().get(SESSION_VAR);
+    public static Result deleteSession(String sessionID) {
+        if(sessionID != null) {
+            UserController.getUserFromSessionID(sessionID).deleteSession(sessionID);
+            flash("success", "Remote session unauthorized");
+            return redirect(routes.Application.index());
+        }
+        sessionID = session().get(SESSION_VAR);
         User u = UserController.getUserFromSessionID(sessionID);
         u.deleteSession(sessionID);
         session().clear();

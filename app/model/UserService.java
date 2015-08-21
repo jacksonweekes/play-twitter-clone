@@ -7,9 +7,9 @@ import model.Exceptions.*;
 /**
  * Created by jackson on 13/08/15.
  */
-public class UserService implements DataInterface {
+public class UserService implements UserDataInterface {
     public static final UserService instance = new UserService();
-    private ConcurrentHashMap<String, User> users = new ConcurrentHashMap<String, User>();
+    private ConcurrentHashMap<String, User> users = new ConcurrentHashMap<>();
 
     // Returns array of all registered users
     public User[] getUserArray() {
@@ -32,7 +32,7 @@ public class UserService implements DataInterface {
 
     // Finds user by id. Returns null if user id does not exist.
     public User getUserByUsername(String username) {
-        return users.get(username);
+        return users.get(username.toLowerCase());
     }
 
     // Finds user by email and password. Returns null if email/password combination is invalid

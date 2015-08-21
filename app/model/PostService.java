@@ -41,7 +41,7 @@ public class PostService implements PostDataInterface {
         if(allPosts.size() <= numPosts) {
             return allPosts;
         }
-        return allPosts.subList((allPosts.size() - numPosts), (allPosts.size() - 1));
+        return allPosts.subList(0, numPosts - 1);
     }
 
     @Override
@@ -58,6 +58,10 @@ public class PostService implements PostDataInterface {
 
     @Override
     public List<Post> getPostsByTag(String tag, int numPosts) {
-        return null;
+        List<Post> allPosts = getPostsByTag(tag);
+        if(allPosts.size() <= numPosts) {
+            return allPosts;
+        }
+        return allPosts.subList(0, numPosts - 1);
     }
 }

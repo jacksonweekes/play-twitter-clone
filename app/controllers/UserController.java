@@ -12,11 +12,12 @@ import java.util.Map;
  */
 public class UserController extends Controller {
 
-    //
+    // In memory data-store
     public static UserDataInterface getUserService() {
         return UserService.instance;
     }
 
+    // Returns the register page
     public static Result newUser() {
         if(getUserService().getUserBySessionID(session(SessionController.SESSION_VAR)) != null) {
             return redirect(routes.Application.index());
@@ -24,6 +25,7 @@ public class UserController extends Controller {
         return ok(register.render());
     }
 
+    // Takes the POST data from the register form and attempts to create new user
     public static Result createUser() {
         Map<String, String[]> values = request().body().asFormUrlEncoded();
         String username = values.get("username")[0];
@@ -42,20 +44,24 @@ public class UserController extends Controller {
         return redirect(routes.Application.index());
     }
 
+    // Shows user given by username. If username is null, show user index,
+    // otherwise redirect to current users homepage
     @Security.Authenticated(CustomAuthenticator.class)
     public static Result showUser(String username) {
         if (username == null) {
-            return index();
+            // User index, not main index
+            return userIndex();
         }
         User u = getUserService().getUserByUsername(username);
         if(u == null) {
             flash("error", "Error: " + username + "does not exist.");
-            return redirect(routes.UserController.showUser(null));
+            return redirect(routes.Application.index());
         }
         return ok(views.html.users.user.render(u));
     }
 
-    public static Result index() {
+    // Renders a User index page, showing list of all users
+    public static Result userIndex() {
         User[] users = getUserService().getUserArray();
         return ok(views.html.users.user_index.render(users));
     }

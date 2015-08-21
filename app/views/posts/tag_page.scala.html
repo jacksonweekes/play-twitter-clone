@@ -7,5 +7,5 @@
             <h1>@tagName</h1>
         </section>
     </aside>
-    @views.html.posts.post_list(PostController.getPostService.getPostsByTag(tagName))
+    @views.html.posts.post_list(PostController.getPostService.getPostsByTag(tagName, 30))
 }

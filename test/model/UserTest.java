@@ -42,6 +42,4 @@ public class UserTest {
         assertNull(instance.getUserByEmailAndPassword("bill@example.com", "password"));
     }
 
-    @Test
-    public void
 }

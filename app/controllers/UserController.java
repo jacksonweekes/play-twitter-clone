@@ -3,7 +3,6 @@ package controllers;
 import model.*;
 import model.Exceptions.ApplicationException;
 import play.mvc.*;
-import static play.mvc.Results;
 import views.html.users.*;
 
 import java.util.Map;
@@ -36,7 +35,8 @@ public class UserController extends Controller {
                 return redirect(routes.UserController.newUser());
         }
         session(SessionController.SESSION_VAR, u.createNewSession());
-        return showUser(u.getUsername());
+        flash("success", "Hi " + u.getUsername() + ", welcome to Twatter!");
+        return redirect(routes.Application.index());
     }
 
     public static Result showUser(String username) {
@@ -45,7 +45,7 @@ public class UserController extends Controller {
         }
         User u = getUserService().getUserByUsername(username);
         if(u == null) {
-            flash("error", username + "does not exist.");
+            flash("error", "Error: " + username + "does not exist.");
             return redirect(routes.UserController.showUser(null));
         }
         return ok(views.html.users.user.render(u));

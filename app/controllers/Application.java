@@ -20,7 +20,7 @@ public class Application extends Controller {
         if(user == null) {
             return ok(index.render(""));
         } else {
-            return redirect(routes.UserController.showUser(user.getUsername()));
+            return ok(views.html.users.user.render(user));
         }
     }
 

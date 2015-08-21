@@ -24,7 +24,7 @@ public class SessionController extends Controller {
         User user = UserController.getUserService().getUserByEmailAndPassword(email, password);
         if(user != null) {
             session(SESSION_VAR, user.createNewSession());
-            return redirect(routes.UserController.showUser(user.getUsername()));
+            return redirect(routes.Application.index());
         }
         flash("error", "Invalid email address or password");
         return badRequest(login.render(""));

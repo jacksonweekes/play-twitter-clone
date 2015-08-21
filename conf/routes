@@ -3,25 +3,30 @@
 # ~~~~
 
 # Static pages
-GET         /                    controllers.Application.index()
-GET         /about               controllers.Application.about()
-GET         /help                controllers.Application.help()
-GET         /contact             controllers.Application.contact()
+GET         /                           controllers.Application.index()
+GET         /about                      controllers.Application.about()
+GET         /help                       controllers.Application.help()
+GET         /contact                    controllers.Application.contact()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 # User pages
-GET         /register            controllers.UserController.newUser()
-POST        /register            controllers.UserController.createUser()
-GET         /users               controllers.UserController.showUser(name ?= null)
+GET         /register                   controllers.UserController.newUser()
+POST        /register                   controllers.UserController.createUser()
+GET         /users                      controllers.UserController.showUser(name ?= null)
 
 # Sessions
-GET         /login               controllers.SessionController.newSession()
-POST        /login               controllers.SessionController.createSession()
-GET         /logout              controllers.SessionController.deleteSession(sessionID ?= null)
+GET         /login                      controllers.SessionController.newSession()
+POST        /login                      controllers.SessionController.createSession()
+GET         /logout                     controllers.SessionController.deleteSession(sessionID ?= null)
 
 # Posts
-POST        /createpost          controllers.PostController.createPost()
-GET         /tags                controllers.PostController.getPosts(tag)
-GET         /search              controllers.PostController.search(searchTerm, searchType)
+POST        /createpost                 controllers.PostController.createPost()
+GET         /tags                       controllers.PostController.getPosts(tag)
+GET         /search                     controllers.PostController.search(searchTerm, searchType)
+
+# API
+POST        /api/postmessage            controllers.APIController.postMessage()
+GET         /api/users/:username        controllers.APIController.getRecentUserPosts(username)
+GET         /api/tags/:tag              controllers.APIController.getRecentTaggedPosts(tag)

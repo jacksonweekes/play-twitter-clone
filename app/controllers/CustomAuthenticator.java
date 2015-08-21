@@ -23,7 +23,7 @@ public class CustomAuthenticator extends Security.Authenticator {
         return redirect(routes.SessionController.newSession());
     }
 
-    public User getUser(Http.Context ctx) {
+    public static User getUser(Http.Context ctx) {
         String sessionID = ctx.session().get(SessionController.SESSION_VAR);
         return UserController.getUserFromSessionID(sessionID);
     }

@@ -23,3 +23,5 @@ GET         /logout              controllers.SessionController.deleteSession(ses
 
 # Posts
 POST        /createpost          controllers.PostController.createPost()
+GET         /tags                controllers.PostController.getPosts(tag)
+GET         /search              controllers.PostController.search(searchTerm, searchType)

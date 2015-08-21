@@ -1,6 +1,7 @@
 @(users: Array[model.User])
 
 @main("Users") {
+    @_search_area()
     <h1>Users</h1>
     <ul>
         @if(users.length == 0) {

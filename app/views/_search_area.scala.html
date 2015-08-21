@@ -1,0 +1,14 @@
+@()
+
+<div id="searchArea" class="col-md-3">
+    <form action="/search" method="get">
+        <div class="form-controller">
+            <input type="text" name="searchTerm" />
+        </div>
+        <div class="form-controller">
+            <input type="radio" class="radio" name="searchType" value="person" checked="checked">Person<br />
+            <input type="radio" class="radio" name="searchType" value="topic">Topic<br />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>

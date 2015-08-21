@@ -1,0 +1,11 @@
+@(tagName: String)
+
+@main(tagName) {
+    @_search_area()
+    <aside class="col-md-3">
+        <section class="tag_info">
+            <h1>@tagName</h1>
+        </section>
+    </aside>
+    @views.html.posts.post_list(PostController.getPostService.getPostsByTag(tagName))
+}

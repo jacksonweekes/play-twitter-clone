@@ -110,9 +110,10 @@ footer {
 aside {
   float: left;
 
-  section.user_info {
+  section.user_info, section.tag_info {
     margin-top: 20px;
   }
+
   section {
     padding: 10px 0;
     margin-top: 20px;
@@ -157,10 +158,37 @@ aside {
     list-style-type: none;
     padding: 10px;
     margin-top: 20px;
-    background-color: lightsteelblue;
+    background-color: #EEEEFF;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+
+    span {
+      font-weight: bold;
+    }
   }
 
+}
+
+#txtArea {
+  margin-top: 20px;
+  width: 100%;
+}
+
+#searchArea {
+  margin-top: 20px;
+  float: right;
+  text-align: left;
+
+  * {
+    margin-left: 20px;
+  }
+
+  .radio {
+    float: left;
+  }
+
+  button {
+    margin-left: 40px;
+  }
 }

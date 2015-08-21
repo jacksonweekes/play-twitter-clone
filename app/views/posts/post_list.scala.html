@@ -1,9 +1,18 @@
-@(user: model.User)
+@(posts: List[model.Post])
 
-<ul class="post">
-    @for(post <- PostController.getPostService.getAllPosts(user.getUsername)) {
-        <li>
-            @post.getMessage
-        </li>
-    }
-</ul>
+<div class="col-md-6">
+    @if(posts == null) {
+        <p>
+            There are no posts to display.
+        </p>
+    } else {
+        <ul class="post">
+        @for(post <- posts) {
+            <li>
+                <span>@@ @post.getUsername</span> @post.getMessage
+            </li>
+        }
+        </ul>
+}
+
+</div>

@@ -1,6 +1,7 @@
 @(user: model.User)
 
     @main(user.getUsername) {
+        @_search_area()
         <aside class="col-md-3">
             <section class="user_info">
                 <h1>@user.getUsername</h1>
@@ -12,15 +13,13 @@
                 }
             </section>
         </aside>
-        <div class="col-md-7">
-            @if(UserController.getUserFromSessionID(session.get(SessionController.SESSION_VAR)) == user) {
-                <form action="@routes.PostController.createPost()" method="post">
-                    <div class="form-controller">
-                        <textarea rows="3" cols="75" name="message">Tell us your thoughts...</textarea>
-                    </div>
+        @if(UserController.getUserFromSessionID(session.get(SessionController.SESSION_VAR)) == user) {
+            <form action="@routes.PostController.createPost()" method="post">
+                <div class="form-controller col-md-6">
+                    <textarea rows="3" id="txtArea" name="message">Tell us your thoughts...</textarea>
                     <button type="submit" class="btn btn-primary">Post</button>
-                </form>
-            }
-            @views.html.posts.post_list(user)
-        </div>
+                </div>
+            </form>
+        }
+        @views.html.posts.post_list(PostController.getPostService.getRecentPosts(user.getUsername, 30))
     }

@@ -5,7 +5,7 @@
 @for(userSession <- user.getAllSessions) {
     @if(userSession.getId == session().get(SessionController.SESSION_VAR)) {
         <li>
-            @userSession.getIpAddress (current)
+            @userSession.getIpAddress (this session)
         </li>
     } else {
         <li>

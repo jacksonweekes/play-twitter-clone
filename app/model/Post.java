@@ -55,6 +55,18 @@ public class Post implements Comparable<Post> {
         return tags.toArray(new String[tags.size()]);
     }
 
+    public String getMessageWithLinkedTags() {
+        String newMessage = message;
+        String regex, replaceText;
+        for(String tag: tags) {
+            regex = "(?<= )#" + tag + "\\b";
+            replaceText = "<a href=\"/tags?tag=" + tag + "\">#" + tag + "</a>";
+            newMessage = newMessage.replaceAll(regex, replaceText);
+        }
+        return newMessage;
+    }
+
+
     @Override
     public int compareTo(Post o) {
         if(postTime < o.postTime) {

@@ -9,7 +9,7 @@
         <ul class="post">
         @for(post <- posts) {
             <li>
-                <span>@@ @post.getUsername</span> @post.getMessage
+                <span>@@ @post.getUsername</span> @Html(post.getMessageWithLinkedTags)
             </li>
         }
         </ul>

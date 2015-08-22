@@ -16,10 +16,16 @@ Pre-seeded users: bob@example.com, jack@example.com, jill@example.com, jan@examp
 
 I have included some tests, which can be run using 'sbt test'. This is by no means exhaustive however much of the important functionality is tested.
 
-#TODO
+
+# TODO
 
 *provide more complete test coverage, refactor existing tests
 
 *code cleanup
 
 *use play.mvc.Controller.Form objects for input forms to improve validation checks
+
+
+# Tasks completed since A1 submission
+
+*added hyperlinked tags to posts

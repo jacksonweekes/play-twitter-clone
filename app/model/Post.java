@@ -59,7 +59,7 @@ public class Post implements Comparable<Post> {
         String newMessage = message;
         String regex, replaceText;
         for(String tag: tags) {
-            regex = "(?<= )#" + tag + "\\b";
+            regex = "[(?<= )#]" + tag + "\\b";
             replaceText = "<a href=\"/tags?tag=" + tag + "\">#" + tag + "</a>";
             newMessage = newMessage.replaceAll(regex, replaceText);
         }

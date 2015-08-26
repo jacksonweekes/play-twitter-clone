@@ -5,12 +5,14 @@
 @for(userSession <- user.getAllSessions) {
     @if(userSession.getId == session().get(SessionController.SESSION_VAR)) {
         <li>
-            @userSession.getIpAddress (this session)
+            @userSession.getIpAddress (this session) <br />
+            Location: @userSession.getLocation
         </li>
     } else {
         <li>
             @userSession.getIpAddress
-            <a href="@routes.SessionController.deleteSession(userSession.getId)">(delete)</a>
+            <a href="@routes.SessionController.deleteSession(userSession.getId)">(delete)</a> <br />
+            Location: @userSession.getLocation
         </li>
     }
 }

@@ -9,3 +9,5 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava)
 libraryDependencies ++= Seq(
   "org.mindrot" % "jbcrypt" % "0.3m"
 )
+
+libraryDependencies ++= Seq( javaWs )

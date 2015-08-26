@@ -29,3 +29,5 @@ I have included some tests, which can be run using 'sbt test'. This is by no mea
 # Tasks completed since A1 submission
 
 *added hyperlinked tags to posts
+
+*findIPLocation(Session.java) now works correctly, calling json api at ip-api.com. Will return 'Unknown' on localhost, however by uncommenting appropriate line in method this can be tested. Should work correctly on a production server.

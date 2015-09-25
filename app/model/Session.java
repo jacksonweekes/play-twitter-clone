@@ -17,7 +17,7 @@ public class Session {
         this.id = java.util.UUID.randomUUID().toString();
         this.ipAddress = ipAddress;
         this.since = System.currentTimeMillis();
-        this.location = PPPPfindIPLocation();
+        this.location = findIPLocation();
     }
 
     public String getIpAddress() {

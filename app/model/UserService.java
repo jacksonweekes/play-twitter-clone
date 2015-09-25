@@ -6,6 +6,7 @@ import model.Exceptions.*;
 
 /**
  * Created by jackson on 13/08/15.
+ * Deprecated- Use MongoUserService instead
  */
 public class UserService implements UserDataInterface {
     public static final UserService instance = new UserService();

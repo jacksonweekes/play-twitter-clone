@@ -13,8 +13,10 @@ import java.util.Map;
 public class UserController extends Controller {
 
     // In memory data-store
+    // Can use UserService.instance or MongoUserService.getInstance()
     public static UserDataInterface getUserService() {
-        return UserService.instance;
+        // return UserService.instance;
+        return MongoUserService.getInstance();
     }
 
     // Returns the register page

@@ -12,9 +12,10 @@ import java.util.Map;
  */
 public class UserController extends Controller {
 
-    // In memory data-store
+    // Can use UserService.instance or MongoUserService.getInstance()
     public static UserDataInterface getUserService() {
-        return UserService.instance;
+        // return UserService.instance;
+        return MongoUserService.getInstance();
     }
 
     // Returns the register page
@@ -54,9 +55,10 @@ public class UserController extends Controller {
         }
         User u = getUserService().getUserByUsername(username);
         if(u == null) {
-            flash("error", "Error: " + username + "does not exist.");
+            flash("error", "Error: " + username + " does not exist.");
             return redirect(routes.Application.index());
         }
+        System.out.print(u.getUsername());
         return ok(views.html.users.user.render(u));
     }
 

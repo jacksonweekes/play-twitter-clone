@@ -1,6 +1,8 @@
 package model;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 import play.libs.F;
 import play.libs.ws.WS;
 import play.libs.ws.WSClient;
@@ -13,11 +15,18 @@ public class Session {
     private String id, ipAddress, location;
     private long since;
 
+    public Session(String id, String ipAddress, long since, String location) {
+        this.id = id;
+        this.ipAddress = ipAddress;
+        this.since = since;
+        this.location = location;
+    }
+
     public Session(String ipAddress) {
-        this.id = java.util.UUID.randomUUID().toString();
+        this.id = MongoProvider.allocateObjectID();
         this.ipAddress = ipAddress;
         this.since = System.currentTimeMillis();
-        this.location = findIPLocation();
+        this.location = findIPLocation(ipAddress);
     }
 
     public String getIpAddress() {
@@ -36,7 +45,7 @@ public class Session {
         return since;
     }
 
-    private String findIPLocation() {
+    private static String findIPLocation(String ipAddress) {
         String city;
         WSClient ws = WS.client();
         // In production environment on localhost this will fail(return "Unknown")
@@ -51,5 +60,27 @@ public class Session {
             city = content.get("city").asText();
         }
         return city;
+    }
+
+    // Create a BSON document from given Session object
+    public static Document sessionToBson(Session s) {
+        return new Document("_id", new ObjectId(s.getId()))
+                .append("ipAddress", s.getIpAddress())
+                .append("since", s.getSince())
+                .append("location", s.getLocation());
+    }
+
+    // Create a Session object from BSON document
+    public static Session sessionFromBson(Document d) {
+        if(d == null) {
+            return null;
+        }
+
+        String id = d.getObjectId("_id").toHexString();
+        String ipAddress = d.getString("ipAddress");
+        long since = d.getLong("since");
+        String location = d.getString("location");
+
+        return new Session(id, ipAddress, since, location);
     }
 }

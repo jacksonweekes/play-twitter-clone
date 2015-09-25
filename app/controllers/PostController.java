@@ -1,9 +1,6 @@
 package controllers;
 
-import model.Post;
-import model.PostDataInterface;
-import model.PostService;
-import model.User;
+import model.*;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -18,7 +15,7 @@ public class PostController extends Controller {
 
     // In memory data-store
     public static PostDataInterface getPostService() {
-        return PostService.instance;
+        return MongoPostService.getInstance();
     }
 
     @Security.Authenticated(CustomAuthenticator.class)

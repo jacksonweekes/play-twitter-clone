@@ -64,6 +64,9 @@ public class MongoUserService implements UserDataInterface {
 
     @Override
     public User getUserBySessionID(String sessionID) {
+        if(sessionID == null) {
+            return null;
+        }
         Document d = mongoProvider.getUserCollection()
                 .find(new Document("sessions._id", new ObjectId(sessionID)))
                 .first();
@@ -73,6 +76,7 @@ public class MongoUserService implements UserDataInterface {
         }
 
         return User.userFromBson(d);
+        //return null;
     }
 
     public void update(User u) {

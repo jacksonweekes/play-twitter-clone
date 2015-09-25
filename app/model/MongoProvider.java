@@ -22,12 +22,16 @@ public class MongoProvider {
         return instance;
     }
 
-    protected MongoDatabase getDB() {
+    private MongoDatabase getDB() {
         return mongoClient.getDatabase("comp391_jcleary9");
     }
 
     protected MongoCollection<Document> getUserCollection() {
         return getDB().getCollection("twatter_users");
+    }
+
+    protected MongoCollection<Document> getPostCollection() {
+        return getDB().getCollection("twatter_posts");
     }
 
     protected static String allocateObjectID() {

@@ -6,10 +6,10 @@
             There are no posts to display.
         </p>
     } else {
-        <ul class="post">
+        <ul class="postList">
         @for(post <- posts) {
             <li>
-                <span>@@ @post.getUsername</span> @Html(post.getMessageWithLinkedTags)
+                <span class="author">@@ @post.getUsername</span> @Html(post.getMessageWithLinkedTags)
             </li>
         }
         </ul>

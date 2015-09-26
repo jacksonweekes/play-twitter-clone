@@ -1,0 +1,12 @@
+@()
+
+@main("ReactJS Demo") {
+   <div id="mountNode">Test</div>
+
+   <!-- Load scripts specific to the single page app -->
+   <!-- React.js -->
+   <script src="https://fb.me/react-0.13.3.js"></script>
+
+   <!-- Custom scripts (for single page app) -->
+   <script src="@routes.Assets.versioned("javascript/spa.js")" defer></script>
+}

@@ -101,11 +101,11 @@ aside {
       font-size: .8em;
       text-align: left; }
 
-.post {
+.postList {
   list-style: none;
   padding-left: 0;
   margin-left: 0; }
-  .post li {
+  .postList li {
     list-style-type: none;
     padding: 10px;
     margin-top: 20px;
@@ -113,10 +113,10 @@ aside {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px; }
-    .post li span {
+    .postList li .author {
       font-weight: bold; }
 
-#txtArea {
+#postTxtArea {
   margin-top: 20px;
   width: 100%; }
 
@@ -124,6 +124,9 @@ aside {
   margin-top: 20px;
   float: right;
   text-align: left; }
+  #searchArea .searchBtn {
+    margin-top: 10px;
+    float: right; }
   #searchArea * {
     margin-left: 20px; }
   #searchArea .radio {

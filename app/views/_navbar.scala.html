@@ -7,6 +7,7 @@
         @if(UserController.getUserFromSessionID(session.get(SessionController.SESSION_VAR)) != null) {
             <nav>
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href='@routes.Application.singlePageApp()'>SPA</a></li>
                     <li><a href='@routes.UserController.showUser()'i>Users</a></li>
                     <li><a href='@routes.SessionController.deleteSession()'>Logout</a></li>
                     <li><a href='@routes.Application.help()'>Help</a></li>
@@ -16,6 +17,7 @@
         } else {
             <nav>
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href='@routes.UserController.newUser()'>Register</a></li>
                     <li><a href='@routes.SessionController.newSession()'>Login</a></li>
                     <li><a href='@routes.Application.help()'>Help</a></li>
                     <li><a href='@routes.Application.about()'>About</a></li>

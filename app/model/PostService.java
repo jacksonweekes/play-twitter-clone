@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by jackson on 21/08/15.
+ * Deprecated- Use MongoPostService instead
  */
 public class PostService implements PostDataInterface {
     public static final PostService instance = new PostService();

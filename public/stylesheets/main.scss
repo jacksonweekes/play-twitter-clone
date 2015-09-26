@@ -148,7 +148,7 @@ aside {
   }
 }
 
-.post {
+.postList {
   list-style: none;
   padding-left: 0;
   margin-left: 0;
@@ -162,14 +162,14 @@ aside {
     -moz-border-radius: 5px;
     border-radius: 5px;
 
-    span {
+    .author {
       font-weight: bold;
     }
   }
 
 }
 
-#txtArea {
+#postTxtArea {
   margin-top: 20px;
   width: 100%;
 }
@@ -178,6 +178,11 @@ aside {
   margin-top: 20px;
   float: right;
   text-align: left;
+
+  .searchBtn {
+    margin-top: 10px;
+    float: right;
+  }
 
   * {
     margin-left: 20px;

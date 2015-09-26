@@ -12,12 +12,13 @@
                     <h3>Current Sessions</h3>
                     @views.html.sessions.session_list(user)
                 }
+
             </section>
         </aside>
         @if(UserController.getUserFromSessionID(session.get(SessionController.SESSION_VAR)).getId == user.getId) {
             <form action="@routes.PostController.createPost()" method="post">
                 <div class="form-controller col-md-6">
-                    <textarea rows="3" id="txtArea" name="message">Tell us your thoughts...</textarea>
+                    <textarea rows="3" id="postTxtArea" name="message" placeholder="Tell us your thoughts..."></textarea>
                     <button type="submit" class="btn btn-primary">Post</button>
                 </div>
             </form>

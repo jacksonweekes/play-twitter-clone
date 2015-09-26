@@ -12,3 +12,5 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies ++= Seq(javaWs)
+
+pipelineStages := Seq(rjs)

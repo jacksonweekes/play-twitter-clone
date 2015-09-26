@@ -24,6 +24,12 @@ public class Application extends Controller {
         }
     }
 
+    // User must be signed in to access this page
+    @Security.Authenticated(CustomAuthenticator.class)
+    public static Result singlePageApp() {
+        return ok(views.html.spa.render());
+    }
+
     public static Result about() {
         return ok(about.render());
     }

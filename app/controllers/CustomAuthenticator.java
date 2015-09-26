@@ -5,6 +5,8 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 
+import static play.mvc.Controller.flash;
+
 /**
  * Created by jackson on 20/08/15.
  */
@@ -20,6 +22,7 @@ public class CustomAuthenticator extends Security.Authenticator {
 
     @Override
     public Result onUnauthorized(Http.Context ctx) {
+        flash("error", "You must log in to access this resource");
         return redirect(routes.SessionController.newSession());
     }
 

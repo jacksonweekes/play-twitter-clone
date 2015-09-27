@@ -111,6 +111,7 @@ aside {
 
   section.user_info, section.tag_info {
     margin-top: 20px;
+    min-height: 500px;
   }
 
   section {
@@ -181,7 +182,6 @@ aside {
 
   .searchBtn {
     margin-top: 10px;
-    float: right;
   }
 
   * {

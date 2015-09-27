@@ -27,12 +27,35 @@ var InfoPanel = React.createClass({
  * Post Section                                                                     *
  * Any components to do with creating or viewing posts are in the following section *
  ***********************************************************************************/
+var PostForm = React.createClass({
+    handleSubmit: function (e) {
+        e.preventDefault();
+        var text = React.findDOMNode(this.refs.text).value.trim();
+        if (!text) {
+            return;
+        }
+        this.props.onPostSubmit(text);
+        React.findDOMNode(this.refs.text).value = '';
+        return;
+    },
+    render: function () {
+        return (
+            <div className="form-controller col-md-6">
+                <form onSubmit={this.handleSubmit}>
+                    <textarea rows="3" id="postTxtArea" ref="text" placeholder="Tell us your thoughts..."/>
+                    <button type="submit" className="btn btn-primary">Post</button>
+                </form>
+            </div>
+        );
+    }
+});
+
 var PostItem = React.createClass({
     render: function () {
         return (
             <li>
                 <span className="author">{this.props.author} </span>
-                <span>{this.props.message}</span>
+                <span>{this.props.children}</span>
             </li>
         );
     }
@@ -40,11 +63,18 @@ var PostItem = React.createClass({
 
 var PostList = React.createClass({
     render: function () {
+        var postNodes = this.props.data.map(function (post) {
+            return (
+                <PostItem author={'@' + post.username}>
+                    {post.message}
+                </PostItem>
+            );
+        });
         return (
             <div className="col-md-6">
+
                 <ul className="postList">
-                    <PostItem author="@jerry" message="oh yea"/>
-                    <PostItem author="@ralph" message="gloves rule!"/>
+                    {postNodes}
                 </ul>
             </div>
         );
@@ -63,9 +93,9 @@ var SearchForm = React.createClass({
         return (
             <form>
                 <div className="form-controller">
-                    <input type="text" name="searchTerm" placeholder="Search..." />
+                    <input type="text" name="searchTerm" placeholder="Search..."/>
+                    <button type="submit" className="btn btn-primary searchBtn">Search</button>
                 </div>
-                <button type="submit" className="btn btn-primary searchBtn">Search</button>
             </form>
 
         );
@@ -74,7 +104,7 @@ var SearchForm = React.createClass({
 var SearchPanel = React.createClass({
     render: function () {
         return (
-            <div id="searchArea" class="col-md-3">
+            <div id="searchArea" className="col-md-3">
                 <SearchForm />
             </div>
         );
@@ -90,16 +120,50 @@ var SearchPanel = React.createClass({
  * It manages all the other components, passing data from the API.                   *
  ************************************************************************************/
 var TwatterApp = React.createClass({
+    loadPostsFromServer: function () {
+        $.ajax({
+            url: this.props.url,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                this.setState({data: data});
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+    },
+    getInitialState: function () {
+        return {data: []}
+    },
+    componentDidMount: function () {
+        this.loadPostsFromServer();
+        setInterval(this.loadPostsFromServer, this.props.pollInterval);
+    },
+    handlePostSubmit: function (post) {
+        $.ajax({
+            url: this.props.postUrl,
+            contentType: 'text/plain',
+            type: 'POST',
+            data: post,
+            success: function (data) {
+                this.setState({data: data});
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+    },
     render: function () {
         return (
             <div className="twatterapp">
-                <h1>TwatterApp</h1>
                 <SearchPanel />
                 <InfoPanel />
-                <PostList />
+                <PostForm onPostSubmit={this.handlePostSubmit} />
+                <PostList data={this.state.data}/>
             </div>
         );
     }
 });
 
-React.render(<TwatterApp />, mountNode);
+React.render(<TwatterApp url="/api/users/bob" postUrl="/api/postmessage" pollInterval={2000}/>, mountNode);

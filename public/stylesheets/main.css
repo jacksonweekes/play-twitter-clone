@@ -73,7 +73,8 @@ footer {
 aside {
   float: left; }
   aside section.user_info, aside section.tag_info {
-    margin-top: 20px; }
+    margin-top: 20px;
+    min-height: 500px; }
   aside section {
     padding: 10px 0;
     margin-top: 20px; }
@@ -125,8 +126,7 @@ aside {
   float: right;
   text-align: left; }
   #searchArea .searchBtn {
-    margin-top: 10px;
-    float: right; }
+    margin-top: 10px; }
   #searchArea * {
     margin-left: 20px; }
   #searchArea .radio {

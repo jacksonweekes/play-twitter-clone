@@ -1,6 +1,8 @@
 package model;
 
-import static model.UserService.instance;
+import static model.Deprecated.UserService.instance;
+
+import model.Deprecated.UserService;
 import org.junit.Before;
 import org.junit.Test;
 

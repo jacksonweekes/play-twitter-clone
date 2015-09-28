@@ -1,6 +1,5 @@
 package model;
 
-import static model.UserService.instance;
 import static org.junit.Assert.*;
 import org.junit.*;
 

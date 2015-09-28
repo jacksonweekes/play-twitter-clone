@@ -1,8 +1,10 @@
-package model;
+package model.Deprecated;
 
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import model.Exceptions.*;
+import model.User;
+import model.UserDataInterface;
 
 /**
  * Created by jackson on 13/08/15.

@@ -1,4 +1,7 @@
-package model;
+package model.Deprecated;
+
+import model.Post;
+import model.PostDataInterface;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

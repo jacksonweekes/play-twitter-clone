@@ -10,9 +10,9 @@ var InfoPanel = React.createClass({
         return (
             <aside className="col-md-3">
                 <section className="user_info">
-                    <h1>Bob</h1>
+                    <h1>{this.props.userDetails.username}</h1>
 
-                    <h2>bob@example.com</h2>
+                    <h2>{this.props.userDetails.email}</h2>
                 </section>
             </aside>
         );
@@ -134,36 +134,31 @@ var TwatterApp = React.createClass({
         });
     },
     getInitialState: function () {
+        this.loadPostsFromServer();
         return {data: []}
     },
     componentDidMount: function () {
-        this.loadPostsFromServer();
+
+        window.getUserDetails();
         setInterval(this.loadPostsFromServer, this.props.pollInterval);
     },
     handlePostSubmit: function (post) {
-        $.ajax({
-            url: this.props.postUrl,
-            contentType: 'text/plain',
-            type: 'POST',
-            data: post,
-            success: function (data) {
-                this.setState({data: data});
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
+        window.sendPost(post);
     },
     render: function () {
         return (
             <div className="twatterapp">
                 <SearchPanel />
-                <InfoPanel />
-                <PostForm onPostSubmit={this.handlePostSubmit} />
+                <InfoPanel userDetails={window.userDetails} />
+                <PostForm onPostSubmit={this.handlePostSubmit}/>
                 <PostList data={this.state.data}/>
             </div>
         );
     }
 });
 
-React.render(<TwatterApp url="/api/users/bob" postUrl="/api/postmessage" pollInterval={2000}/>, mountNode);
+var rerender = function () {
+    React.render(<TwatterApp url="/api/users/bob" postUrl="/api/postmessage" pollInterval={2000}/>, mountNode);
+}
+
+rerender();

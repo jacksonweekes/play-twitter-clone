@@ -1,7 +1,7 @@
 import model.Post;
-import model.PostService;
+import model.Deprecated.PostService;
 import model.User;
-import model.UserService;
+import model.Deprecated.UserService;
 import play.GlobalSettings;
 
 import play.*;

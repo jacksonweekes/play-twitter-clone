@@ -1,5 +1,7 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import model.Post;
 import model.User;
 import play.mvc.Controller;
@@ -45,6 +47,17 @@ public class APIController extends Controller {
     public static Result getRecentTaggedPosts(String tag) {
         List<Post> posts = PostController.getPostService().getPostsByTag(tag);
         return ok(Json.toJson(posts));
+    }
+
+    // Get current user details
+    @Security.Authenticated(APIAuthenticator.class)
+    public static Result getUserDetails() {
+        User u = CustomAuthenticator.getUser(Http.Context.current());
+        ObjectNode json = Json.newObject();
+        json.put("username", u.getUsername());
+        json.put("email", u.getEmail());
+
+        return ok(json);
     }
 
 }

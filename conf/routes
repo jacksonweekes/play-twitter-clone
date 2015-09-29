@@ -31,4 +31,6 @@ GET         /search                     controllers.PostController.search(search
 POST        /api/postmessage            controllers.APIController.postMessage()
 GET         /api/users/:username        controllers.APIController.getRecentUserPosts(username)
 GET         /api/tags/:tag              controllers.APIController.getRecentTaggedPosts(tag)
-GET         /api/userdetails            controllers.APIController.getUserDetails()
+
+# Web Socket
+GET         /ws                         controllers.APIController.socket(searchTerm, searchType)

@@ -4,10 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import model.Post;
 import model.User;
-import play.mvc.Controller;
-import play.mvc.Http;
-import play.mvc.Result;
-import play.mvc.Security;
+import play.mvc.*;
+
 import java.util.List;
 import play.libs.Json;
 
@@ -34,7 +32,8 @@ public class APIController extends Controller {
     public static Result getRecentUserPosts(String username) {
         User u = UserController.getUserService().getUserByUsername(username);
         if(u == null) {
-            return notFound();
+            // Return empty array
+            return ok("[]");
         }
         List<Post> posts = PostController.getPostService().getRecentPosts(u.getUsername(), 30);
         return ok(Json.toJson(posts));
@@ -49,15 +48,8 @@ public class APIController extends Controller {
         return ok(Json.toJson(posts));
     }
 
-    // Get current user details
     @Security.Authenticated(APIAuthenticator.class)
-    public static Result getUserDetails() {
-        User u = CustomAuthenticator.getUser(Http.Context.current());
-        ObjectNode json = Json.newObject();
-        json.put("username", u.getUsername());
-        json.put("email", u.getEmail());
-
-        return ok(json);
+    public static WebSocket<String> socket(String searchTerm, String searchType) {
+        return WebSocket.<String>withActor((out) -> PostWebSocketActor.props(searchTerm, searchType, out));
     }
-
 }

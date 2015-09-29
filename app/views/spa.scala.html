@@ -1,4 +1,4 @@
-@()
+@(username : String, email : String)
 
 @main("ReactJS Demo") {
    <div id="mountNode">Test</div>
@@ -7,7 +7,8 @@
    <!-- React.js -->
    <script src="https://fb.me/react-0.13.3.js"></script>
 
-   <!-- Custom scripts (for single page app) -->
+   <!-- Custom scripts (for single page app). Top script sets user details passed from Play! -->
+   <script>window.userDetails = {username:"@username",email:"@email"};</script>
    <script src="@routes.Assets.versioned("javascript/spa-data-controller.js")"></script>
    <script src="@routes.Assets.versioned("javascript/spa.js")"></script>
 }

@@ -18,7 +18,7 @@
         @if(UserController.getUserFromSessionID(session.get(SessionController.SESSION_VAR)).getId == user.getId) {
             <form action="@routes.PostController.createPost()" method="post">
                 <div class="form-controller col-md-6">
-                    <textarea rows="3" id="postTxtArea" name="message" placeholder="Tell us your thoughts..."></textarea>
+                    <input type="text" id="postTxtArea" name="message" placeholder="Tell us your thoughts..."></input>
                     <button type="submit" class="btn btn-primary">Post</button>
                 </div>
             </form>

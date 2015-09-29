@@ -5,6 +5,7 @@ import akka.actor.Props;
 import akka.actor.UntypedActor;
 import model.PostHub;
 import model.PostListener;
+import play.libs.Json;
 
 /**
  * Created by jackson on 27/09/15.
@@ -15,18 +16,21 @@ public class PostWebSocketActor extends UntypedActor {
      * "Props" object that tells Akka what kind of actor to create, and what constructor arguments to pass to it.
      * This method produces that Props object.
      */
-    public static Props props(String topic, ActorRef out) {
+    public static Props props(String searchTerm, String searchType, ActorRef out) {
         // Create a Props object that says:
         // - I want a PostWebSocketActor,
         // - and pass (topic, out) as the arguments to its constructor
-        return Props.create(PostWebSocketActor.class, topic, out);
+        return Props.create(PostWebSocketActor.class, searchTerm, searchType, out);
     }
 
     /** The Actor for the client (browser) */
     private final ActorRef out;
 
-    /** The topic string we have subscribed to */
-    private final String topic;
+    /**
+     * The topic string we have subscribed to
+     */
+    private final String searchType;
+    private final String searchTerm;
 
     /** A listener that we will register with our GibberishHub */
     private final PostListener listener;
@@ -34,8 +38,9 @@ public class PostWebSocketActor extends UntypedActor {
     /**
      * This constructor is called by Akka to create our actor (we don't call it ourselves).
      */
-    public PostWebSocketActor(String topic, ActorRef out) {
-        this.topic = topic;
+    public PostWebSocketActor(String searchTerm, String searchType, ActorRef out) {
+        this.searchTerm = searchTerm;
+        this.searchType = searchType;
         this.out = out;
 
         /*
@@ -54,6 +59,13 @@ public class PostWebSocketActor extends UntypedActor {
 //                 */
 //                out.tell(message, self());
 //            }
+            String message = Json.toJson(p).toString();
+            System.out.println("Hello there");
+            System.out.println(message);
+            if ((searchType.equals("users") && searchTerm.equals(p.getUsername()))
+                    || (searchType.equals("tags") && p.hasTag(searchTerm))) {
+                out.tell(Json.toJson(p).toString(), self());
+            }
         };
 
         // Register this actor to hear gibberish

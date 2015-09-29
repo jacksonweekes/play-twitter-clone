@@ -25,6 +25,9 @@ public class MongoPostService implements PostDataInterface {
     public void addPost(Post post) {
         Document d = Post.postToBson(post);
         mongoProvider.getPostCollection().insertOne(d);
+
+        // Let the PostHub know that a post has been added
+        PostHub.getInstance().send(post);
     }
 
     @Override

@@ -101,6 +101,8 @@ aside {
     aside section li {
       font-size: .8em;
       text-align: left; }
+    aside section a:hover {
+      cursor: pointer; }
 
 .postList {
   list-style: none;
@@ -116,9 +118,13 @@ aside {
     border-radius: 5px; }
     .postList li .author {
       font-weight: bold; }
+    .postList li a:hover {
+      cursor: pointer; }
 
 #postTxtArea {
+  height: 40px;
   margin-top: 20px;
+  margin-bottom: 20px;
   width: 100%; }
 
 #searchArea {

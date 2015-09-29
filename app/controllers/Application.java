@@ -2,10 +2,10 @@ package controllers;
 
 import model.*;
 import play.*;
-import play.mvc.*;
-import model.BCryptExample;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.*;
 import views.html.static_pages.*;
 
@@ -27,7 +27,8 @@ public class Application extends Controller {
     // User must be signed in to access this page
     @Security.Authenticated(CustomAuthenticator.class)
     public static Result singlePageApp() {
-        return ok(views.html.spa.render());
+        User u = CustomAuthenticator.getUser(Http.Context.current());
+        return ok(views.html.spa.render(u.getUsername(), u.getEmail()));
     }
 
     public static Result about() {

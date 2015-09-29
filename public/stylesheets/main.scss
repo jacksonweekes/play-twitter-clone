@@ -146,6 +146,10 @@ aside {
       font-size: .8em;
       text-align: left;
     }
+
+    a:hover {
+      cursor: pointer;
+    }
   }
 }
 
@@ -166,12 +170,18 @@ aside {
     .author {
       font-weight: bold;
     }
+
+    a:hover {
+      cursor: pointer;
+    }
   }
 
 }
 
 #postTxtArea {
+  height: 40px;
   margin-top: 20px;
+  margin-bottom: 20px;
   width: 100%;
 }
 

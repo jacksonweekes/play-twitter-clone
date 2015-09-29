@@ -6,11 +6,19 @@ var mountNode = document.getElementById("mountNode");
  *****************************************************************************/
 // This is the panel on the left of the page
 var InfoPanel = React.createClass({
+    handleSubmit: function(e) {
+        e.preventDefault();
+        window.resetToUser();
+    },
     render: function () {
         return (
             <aside className="col-md-3">
                 <section className="user_info">
-                    <h1>{this.props.userDetails.username}</h1>
+                    <h1>
+                        <a onClick={this.handleSubmit}>
+                            {this.props.userDetails.username}
+                        </a>
+                    </h1>
 
                     <h2>{this.props.userDetails.email}</h2>
                 </section>
@@ -42,7 +50,7 @@ var PostForm = React.createClass({
         return (
             <div className="form-controller col-md-6">
                 <form onSubmit={this.handleSubmit}>
-                    <textarea rows="3" id="postTxtArea" ref="text" placeholder="Tell us your thoughts..."/>
+                    <input type="text" id="postTxtArea" ref="text" placeholder="Tell us your thoughts..."/>
                     <button type="submit" className="btn btn-primary">Post</button>
                 </form>
             </div>
@@ -51,11 +59,26 @@ var PostForm = React.createClass({
 });
 
 var PostItem = React.createClass({
+    handleAuthorSubmit: function(e) {
+        e.preventDefault();
+        window.doSearch(this.props.author);
+    },
+    getLinkedMessage: function() {
+        var message = this.props.children;
+        var regex;
+        for(var i = 0; i < this.props.tags.length; i++) {
+            regex = "[(?<= )#]" + this.props.tags[i] + "\\b";
+            var replaceText = "<a onClick=window.doSearch(\"" + this.props.tags[i] + "\")>"
+                + "#" + this.props.tags[i] + "<\/a>";
+            message = message.replace(new RegExp("#" + this.props.tags[i], 'g'), replaceText);
+        }
+        return {__html: message};
+    },
     render: function () {
         return (
             <li>
-                <span className="author">{this.props.author} </span>
-                <span>{this.props.children}</span>
+                <a onClick={this.handleAuthorSubmit} className="author">{this.props.author} </a>
+                <span dangerouslySetInnerHTML={this.getLinkedMessage()} />
             </li>
         );
     }
@@ -65,7 +88,7 @@ var PostList = React.createClass({
     render: function () {
         var postNodes = this.props.data.map(function (post) {
             return (
-                <PostItem author={'@' + post.username}>
+                <PostItem author={'@' + post.username} tags={post.tags}>
                     {post.message}
                 </PostItem>
             );
@@ -89,14 +112,25 @@ var PostList = React.createClass({
  * Any components used in the search area on the right of the page are in this section *
  **************************************************************************************/
 var SearchForm = React.createClass({
+    handleSubmit: function (e) {
+        e.preventDefault();
+        var text = React.findDOMNode(this.refs.searchBox).value.trim();
+        if (!text) {
+            return;
+        }
+        this.props.onSearch(text);
+        React.findDOMNode(this.refs.searchBox).value = '';
+        return;
+    },
     render: function () {
         return (
-            <form>
-                <div className="form-controller">
-                    <input type="text" name="searchTerm" placeholder="Search..."/>
+            <div className="form-controller">
+                <form onSubmit={this.handleSubmit}>
+                    <input type="text" ref="searchBox" placeholder="Search..."/>
                     <button type="submit" className="btn btn-primary searchBtn">Search</button>
-                </div>
-            </form>
+
+                </form>
+            </div>
 
         );
     }
@@ -105,7 +139,7 @@ var SearchPanel = React.createClass({
     render: function () {
         return (
             <div id="searchArea" className="col-md-3">
-                <SearchForm />
+                <SearchForm onSearch={this.props.onSearch}/>
             </div>
         );
     }
@@ -121,44 +155,42 @@ var SearchPanel = React.createClass({
  ************************************************************************************/
 var TwatterApp = React.createClass({
     loadPostsFromServer: function () {
-        $.ajax({
-            url: this.props.url,
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                this.setState({data: data});
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
+        window.loadPosts();
     },
     getInitialState: function () {
-        this.loadPostsFromServer();
         return {data: []}
     },
     componentDidMount: function () {
-
-        window.getUserDetails();
-        setInterval(this.loadPostsFromServer, this.props.pollInterval);
+        this.loadPostsFromServer();
+        rerender();
     },
     handlePostSubmit: function (post) {
         window.sendPost(post);
     },
     render: function () {
+        var postForm;
+
+        // Determine whether to show post form depending what feed user is viewing
+        if (window.userDetails.username == window.searchTerm) {
+            postForm = <PostForm onPostSubmit={this.handlePostSubmit} />
+        } else {
+            // Do nothing(Post form only shown if on logged-in users post feed)
+            postForm = null;
+        }
+
         return (
             <div className="twatterapp">
-                <SearchPanel />
-                <InfoPanel userDetails={window.userDetails} />
-                <PostForm onPostSubmit={this.handlePostSubmit}/>
-                <PostList data={this.state.data}/>
+                <SearchPanel onSearch={window.doSearch}/>
+                <InfoPanel userDetails={window.userDetails}/>
+                {postForm}
+                <PostList data={window.postData} />
             </div>
         );
     }
 });
 
 var rerender = function () {
-    React.render(<TwatterApp url="/api/users/bob" postUrl="/api/postmessage" pollInterval={2000}/>, mountNode);
+    React.render(<TwatterApp />, mountNode);
 }
 
 rerender();

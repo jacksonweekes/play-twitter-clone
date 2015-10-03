@@ -1,7 +1,8 @@
 package model;
 
 import com.mongodb.Block;
-import model.Exceptions.ApplicationException;
+import model.Exceptions.RegistrationErrorCode;
+import model.Exceptions.RegistrationException;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -34,10 +35,16 @@ public class MongoUserService implements UserDataInterface {
      * Use to add a new user to the database
      *
      * @param user the {@link User} to be added to the database
-     * @throws ApplicationException
+     * @throws RegistrationException
      */
     @Override
-    public void addUser(User user) throws ApplicationException {
+    public void addUser(User user) throws RegistrationException {
+        if (getUserByUsername(user.getUsername()) != null) {
+            throw new RegistrationException(RegistrationErrorCode.DUPLICATE_USERNAME);
+        } else if (mongoProvider.getUserCollection()
+                .find(new Document("email", user.getEmail())).first() != null) {
+            throw new RegistrationException(RegistrationErrorCode.DUPLICATE_EMAIL);
+        }
         Document d = User.userToBson(user);
         mongoProvider.getUserCollection().insertOne(d);
     }
@@ -77,7 +84,7 @@ public class MongoUserService implements UserDataInterface {
     /**
      * Gets a {@link User} by given email and password, returns null if email or password incorrect.
      *
-     * @param email the email of the user
+     * @param email    the email of the user
      * @param password the password of the user
      * @return
      */
@@ -101,7 +108,7 @@ public class MongoUserService implements UserDataInterface {
      */
     @Override
     public User getUserBySessionID(String sessionID) {
-        if(sessionID == null) {
+        if (sessionID == null) {
             return null;
         }
         Document d = mongoProvider.getUserCollection()

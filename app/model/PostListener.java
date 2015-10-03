@@ -1,8 +1,17 @@
 package model;
 
 /**
- * Created by jackson on 27/09/15.
+ * PostListener interface. Any objects that wish to register as listeners with
+ * the {@link PostHub} must implement this. Modified from tutorial code.
+ *
+ * @author Jackson Cleary
+ * @author William Billingsly
  */
 public interface PostListener {
-    public void receivePost(Post p);
+    /**
+     * The action to perform when a {@link Post} object has been received by the listener
+     *
+     * @param p the {@link Post} being received
+     */
+    void receivePost(Post p);
 }

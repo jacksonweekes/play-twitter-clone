@@ -1,5 +1,5 @@
 /**
- * Created by jackson on 28/09/15.
+ * This file handles the interaction between the ReactJS app and the server
  */
 
 (function() {
@@ -7,18 +7,33 @@
     window.searchType = 'users';
     window.searchTerm = this.userDetails.username;
 
+    // The current Posts
     window.postData = [];
 
+    // Our websocket
     var websocket = null;
 
+    /**
+     * Sets the searchType('users' or 'tags')
+     *
+     * @param type the search type
+     */
     window.setSearchType = function(type) {
         this.searchType = type;
     }
 
+    /**
+     * Sets the searchTerm(ie. a username or a tag)
+     *
+     * @param term the searchTerm
+     */
     window.setSearchTerm = function(term) {
         this.searchTerm = term;
     };
 
+    /**
+     * Resets the page to show the logged in users posts
+     */
     window.resetToUser = function() {
         setSearchTerm(this.userDetails.username);
         setSearchType('users');
@@ -26,9 +41,14 @@
         rerender();
     }
 
-    // Makes AJAX POST request(using jQuery) to server to post a new message
-    // Called when user submits the new post form.
+    /**
+     * Makes AJAX POST request(using jQuery) to server to post a new message
+     * Called when user submits the new post form.
+     *
+     * @param post the message to post to the server
+     */
     window.sendPost = function(post) {
+        // the path to the api endpoint
         var path = "/api/postmessage";
         $.ajax({
             url: path,
@@ -44,15 +64,19 @@
         });
     };
 
-    // Loads initial set of posts and sets up new websocket
+    /**
+     * Loads initial set of posts and sets up new websocket
+     */
     window.loadPosts = function() {
         // Close current websocket if it exists
         if(websocket != null) {
             websocket.close();
         }
 
-        // Make ajax call using jQuery to get initial set of(up to) 30 posts
+        // create the query path according to our searchType and searchTerm
         var path = "/api/" + this.searchType + "/" + this.searchTerm;
+
+        // Make ajax call using jQuery to get initial set of(up to) 30 posts
         $.ajax({
             url: path,
             dataType: 'json',
@@ -66,9 +90,16 @@
             }.bind(this)
         });
 
+        // create a new websocket connection with new details
         this.getSocket();
     }
 
+    /**
+     * Gets new set of posts based on the searchValue. If first character is a @ it searches for users,
+     * if # or no preceding character, searches for tags
+     *
+     * @param searchValue the value containing the search information
+     */
     window.doSearch = function(searchValue) {
         // Check that searchValue is not empty
         if(!searchValue) {
@@ -95,17 +126,25 @@
         // Load new set of posts
         loadPosts();
 
+        // Get React to rerender page
         rerender();
     }
 
-    // Creates the web socket connection
+    /**
+     * Creates a websocket connection using current searchType and searchTerm
+     *
+     * @returns a new websocket connection
+     */
     window.getSocket = function() {
+        // Create new websocket
         websocket = new WebSocket("ws://" + window.location.host
             + "/ws?searchTerm=" + this.searchTerm + "&searchType=" + this.searchType);
+
+        // Define websockets behaviour when a message is received
         return websocket.onmessage = function(msg) {
             var json;
+            // Extract json data from the message
             json = JSON.parse(msg.data);
-            console.log("recieved message: " + msg.data);
             window.postData.unshift(json);
             return rerender();
         }

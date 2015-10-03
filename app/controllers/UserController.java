@@ -1,7 +1,7 @@
 package controllers;
 
 import model.*;
-import model.Exceptions.ApplicationException;
+import model.Exceptions.RegistrationException;
 import play.mvc.*;
 import views.html.users.*;
 
@@ -52,7 +52,7 @@ public class UserController extends Controller {
 
         try {
             getUserService().addUser(u);
-        } catch(ApplicationException e) {
+        } catch(RegistrationException e) {
                 flash("error", e.getErrorCode().getDescription());
                 return redirect(routes.UserController.newUser());
         }

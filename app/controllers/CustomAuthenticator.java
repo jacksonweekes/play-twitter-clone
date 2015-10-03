@@ -31,7 +31,7 @@ public class CustomAuthenticator extends Security.Authenticator {
     }
 
     /**
-     * Describes behaviour in the case that the user is not logged in or does not have required priveledges
+     * Describes behaviour in the case that the user is not logged in or does not have required privileges
      *
      * @param ctx Http context of request
      * @return Redirects user to the login screen

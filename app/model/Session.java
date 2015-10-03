@@ -9,19 +9,27 @@ import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 
 /**
- * Created by jackson on 15/08/15.
+ * The Session model, used to store information about user sessions
+ *
+ * @author Jackson Cleary
  */
 public class Session {
     private String id, ipAddress, location;
     private long since;
 
-    public Session(String id, String ipAddress, long since, String location) {
+    // This constructor only used for recreating Sessions from database
+    private Session(String id, String ipAddress, long since, String location) {
         this.id = id;
         this.ipAddress = ipAddress;
         this.since = since;
         this.location = location;
     }
 
+    /**
+     * Constructor
+     *
+     * @param ipAddress the ip address of the client being logged in
+     */
     public Session(String ipAddress) {
         this.id = MongoProvider.allocateObjectID();
         this.ipAddress = ipAddress;
@@ -29,23 +37,49 @@ public class Session {
         this.location = findIPLocation(ipAddress);
     }
 
+    /**
+     * Gets the ip address of the session
+     *
+     * @return the sessions ip address
+     */
     public String getIpAddress() {
         return ipAddress;
     }
 
+    /**
+     * Gets the id of the session
+     *
+     * @return id of the session, a {@link ObjectId} represented as a hex string
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Gets the location of the session
+     *
+     * @return location of the session
+     */
     public String getLocation() {
         return location;
     }
 
+    /**
+     * Gets the time the session was created
+     *
+     * @return the time the session was created in milliseconds since epoch
+     */
     public long getSince() {
         return since;
     }
 
-    private static String findIPLocation(String ipAddress) {
+    /**
+     * Uses http://ip-api.com to find the users location based off their ip address
+     *
+     * @param ipAddress the ip address to find the location of
+     * @return the approximate location of the ip address, or 'unknown' if can't be determined
+     */
+    public static String findIPLocation(String ipAddress) {
         String city;
         WSClient ws = WS.client();
         // In production environment on localhost this will fail(return "Unknown")
@@ -62,7 +96,11 @@ public class Session {
         return city;
     }
 
-    // Create a BSON document from given Session object
+    /**
+     * Creates a BSON Document from given Session object
+     * @param s the session to convert into BSON
+     * @return a BSON Document representing the given Session object
+     */
     public static Document sessionToBson(Session s) {
         return new Document("_id", new ObjectId(s.getId()))
                 .append("ipAddress", s.getIpAddress())
@@ -70,7 +108,11 @@ public class Session {
                 .append("location", s.getLocation());
     }
 
-    // Create a Session object from BSON document
+    /**
+     * Creates a Session object from BSON Document
+     * @param d The Document from which to recreate a Session
+     * @return the Session stored in the given Document
+     */
     public static Session sessionFromBson(Document d) {
         if(d == null) {
             return null;

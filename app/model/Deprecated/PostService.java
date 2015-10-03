@@ -16,7 +16,7 @@ public class PostService implements PostDataInterface {
     private static final PostService instance = new PostService();
     private ConcurrentHashMap<String, Post> posts = new ConcurrentHashMap<>();
 
-    public PostService getInstance() {
+    public static PostService getInstance() {
         return instance;
     }
 
@@ -30,6 +30,7 @@ public class PostService implements PostDataInterface {
     public List<Post> getAllPosts() {
         List<Post> postList = new ArrayList<>(posts.values());
         Collections.sort(postList);
+        Collections.reverse(postList);
         return postList;
     }
 

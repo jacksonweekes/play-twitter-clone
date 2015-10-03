@@ -16,7 +16,7 @@ public class UserService implements UserDataInterface {
     private static final UserService instance = new UserService();
     private ConcurrentHashMap<String, User> users = new ConcurrentHashMap<>();
 
-    public UserService getInstance() {
+    public static UserService getInstance() {
         return instance;
     }
 
@@ -26,14 +26,14 @@ public class UserService implements UserDataInterface {
     }
 
     // Register new user. Throws exception if new user conflicts with already registered user
-    public void addUser(User u) throws ApplicationException {
+    public void addUser(User u) throws RegistrationException {
         Collection<User> userCollection = users.values();
         for(User user: userCollection) {
             if(user.getUsername().equals(u.getUsername())) {
-                throw new ApplicationException(ErrorCode.DUPLICATE_USERNAME);
+                throw new RegistrationException(RegistrationErrorCode.DUPLICATE_USERNAME);
             }
             if(user.getEmail().equals(u.getEmail())) {
-                throw new ApplicationException(ErrorCode.DUPLICATE_EMAIL);
+                throw new RegistrationException(RegistrationErrorCode.DUPLICATE_EMAIL);
             }
         }
         users.put(u.getUsername(), u);

@@ -15,9 +15,12 @@ import play.libs.Json;
  */
 public class PostWebSocketActor extends UntypedActor {
     /**
-     * We don't create the actor ourselves. Instead, Play will ask Akka to make it for us. We have to give Akka a
-     * "Props" object that tells Akka what kind of actor to create, and what constructor arguments to pass to it.
-     * This method produces that Props object.
+     * Creates a 'Props' object for Akka to use to create our actor.
+     *
+     * @param searchTerm
+     * @param searchType
+     * @param out
+     * @return
      */
     public static Props props(String searchTerm, String searchType, ActorRef out) {
         // Create a Props object that says:
@@ -29,13 +32,13 @@ public class PostWebSocketActor extends UntypedActor {
     /** The Actor for the client (browser) */
     private final ActorRef out;
 
-    /**
-     * The topic string we have subscribed to
-     */
+    /** The searchType we have subscribed to('users' or 'tags') */
     private final String searchType;
+
+    /** The searchTerm we have subscribed to */
     private final String searchTerm;
 
-    /** A listener that we will register with our GibberishHub */
+    /** A listener that we will register with our PostHub */
     private final PostListener listener;
 
     /**
@@ -47,31 +50,18 @@ public class PostWebSocketActor extends UntypedActor {
         this.out = out;
 
         /*
-          Our GibberishListener, written as a Java 8 Lambda.
-          Whenever we receive a gibberish, if it matches our topic, convert it to a JSON string, and send it to the client.
+          Our PostListener, written as a Java 8 Lambda.
+          Whenever we receive a post, if it matches our topic, convert it to a JSON string, and send it to the client.
          */
         this.listener = (p) -> {
-            //TODO: Listener behaviour
-//            if (p.getSubject().equals(this.topic)) {
-//                // Convert the Gibberish to a JSON string
-//                String message = JsonExample.toJson(g).toString();
-//
-//                /*
-//                 This asynchronously sends the message to the WebSocket client.
-//                 Self is a reference to this actor (the sender)
-//                 */
-//                out.tell(message, self());
-//            }
             String message = Json.toJson(p).toString();
-            System.out.println("Hello there");
-            System.out.println(message);
             if ((searchType.equals("users") && searchTerm.equals(p.getUsername()))
                     || (searchType.equals("tags") && p.hasTag(searchTerm))) {
                 out.tell(Json.toJson(p).toString(), self());
             }
         };
 
-        // Register this actor to hear gibberish
+        // Register this actor with the PostHub
         PostHub.getInstance().addListener(listener);
     }
 

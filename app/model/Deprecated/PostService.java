@@ -7,12 +7,18 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Created by jackson on 21/08/15.
- * Deprecated- Use MongoPostService instead
+ * In memory data store for Posts
+ *
+ * @author Jackson Cleary
+ * @deprecated - Use {@link model.MongoPostService} instead
  */
 public class PostService implements PostDataInterface {
-    public static final PostService instance = new PostService();
+    private static final PostService instance = new PostService();
     private ConcurrentHashMap<String, Post> posts = new ConcurrentHashMap<>();
+
+    public PostService getInstance() {
+        return instance;
+    }
 
     @Override
     public void addPost(Post post) {

@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by jackson on 24/09/15.
+ * Provides a MongoDB backed UserDataInterface
+ *
+ * @author Jackson Cleary
  */
 public class MongoUserService implements UserDataInterface {
     private static final MongoUserService instance = new MongoUserService();
@@ -19,16 +21,32 @@ public class MongoUserService implements UserDataInterface {
         mongoProvider = MongoProvider.getInstance();
     }
 
+    /**
+     * Gets the single MongoUserService instance
+     *
+     * @return instance of MongoUserService
+     */
     public static MongoUserService getInstance() {
         return instance;
     }
 
+    /**
+     * Use to add a new user to the database
+     *
+     * @param user the {@link User} to be added to the database
+     * @throws ApplicationException
+     */
     @Override
     public void addUser(User user) throws ApplicationException {
         Document d = User.userToBson(user);
         mongoProvider.getUserCollection().insertOne(d);
     }
 
+    /**
+     * Gets an array of all users in the database
+     *
+     * @return Array of {@link User} objects
+     */
     @Override
     public User[] getUserArray() {
         List<User> userList = new ArrayList<>();
@@ -42,6 +60,12 @@ public class MongoUserService implements UserDataInterface {
         return userArray;
     }
 
+    /**
+     * Gets a {@link User} object by given username
+     *
+     * @param username the username of the User object to retrieve
+     * @return the {@link User} object with given username
+     */
     @Override
     public User getUserByUsername(String username) {
         Document d = mongoProvider.getUserCollection()
@@ -50,6 +74,13 @@ public class MongoUserService implements UserDataInterface {
         return u;
     }
 
+    /**
+     * Gets a {@link User} by given email and password, returns null if email or password incorrect.
+     *
+     * @param email the email of the user
+     * @param password the password of the user
+     * @return
+     */
     @Override
     public User getUserByEmailAndPassword(String email, String password) {
         Document d = mongoProvider.getUserCollection()
@@ -62,6 +93,12 @@ public class MongoUserService implements UserDataInterface {
         }
     }
 
+    /**
+     * Gets a {@link User} with given sessionID, returns null if none exist
+     *
+     * @param sessionID the sessionID to search for(likely from browser cookie)
+     * @return the {@link User} object which has the given sessionID
+     */
     @Override
     public User getUserBySessionID(String sessionID) {
         if(sessionID == null) {
@@ -79,6 +116,11 @@ public class MongoUserService implements UserDataInterface {
         //return null;
     }
 
+    /**
+     * Updates the database when the current {@link User} model changes
+     *
+     * @param u the {@link User} model to update
+     */
     public void update(User u) {
         mongoProvider.getUserCollection()
                 .replaceOne(new Document("_id", new ObjectId(u.getId())), User.userToBson(u));

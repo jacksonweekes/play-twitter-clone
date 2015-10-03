@@ -10,13 +10,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by jackson on 21/08/15.
+ * The Post model
+ *
+ * @author Jackson Cleary
  */
 public class Post implements Comparable<Post> {
     private String postID, username, message;
     private String[] tags;
     private long postTime;
 
+    /**
+     * Public constructor for the Post object
+     * @param username username of the {@link User} creating the post
+     * @param message the message contained in the post
+     */
     public Post(String username, String message) {
         this.postID = new ObjectId().toHexString();
         this.username = username.toLowerCase();
@@ -33,14 +40,29 @@ public class Post implements Comparable<Post> {
         this.postTime = postTime;
     }
 
+    /**
+     * Gets the name of the {@link User} who created the post
+     *
+     * @return username of the {@link User} who created the post
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Gets the postID of the post
+     *
+     * @return postID of the post
+     */
     public String getPostID() {
         return postID;
     }
 
+    /**
+     * Gets the message contained in the post
+     *
+     * @return the message contained in the post
+     */
     public String getMessage() {
         return message;
     }

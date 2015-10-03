@@ -9,9 +9,19 @@ import play.mvc.Security;
 import views.html.*;
 import views.html.static_pages.*;
 
+/**
+ * This controller is resposible for the static pages/routes in the application, including the
+ * single page app.
+ *
+ * @author Jackson Cleary
+ */
 public class Application extends Controller {
 
-    // Static page controllers
+    /**
+     * Index page for unauthorized users.
+     *
+     * @return Home page of Twatter application
+     */
     public static Result index() {
         User user = UserController
                         .getUserService()
@@ -24,21 +34,40 @@ public class Application extends Controller {
         }
     }
 
-    // User must be signed in to access this page
+    /**
+     * Single Page App. User must be authenticated to access.
+     *
+     * @return Single Page App version of Twatter
+     */
     @Security.Authenticated(CustomAuthenticator.class)
     public static Result singlePageApp() {
         User u = CustomAuthenticator.getUser(Http.Context.current());
         return ok(views.html.spa.render(u.getUsername(), u.getEmail()));
     }
 
+    /**
+     * About page
+     *
+     * @return General information page about Twatter
+     */
     public static Result about() {
         return ok(about.render());
     }
 
+    /**
+     * Help page
+     *
+     * @return General assistance for users
+     */
     public static Result help() {
         return ok(help.render());
     }
 
+    /**
+     * Contact page
+     *
+     * @return Contact details
+     */
     public static Result contact() {
         return ok(contact.render());
     }

@@ -6,17 +6,28 @@ import views.html.sessions.login;
 
 import java.util.*;
 /**
- * Created by jackson on 17/08/15.
+ * Session controller for Twatter, handles login/logout.
+ *
+ * @author Jackson Cleary
  */
 public class SessionController extends Controller {
     public final static String SESSION_VAR = "session_id";
 
-    // Renders login page
+    /**
+     * GET route- Renders login page
+     *
+     * @return login page
+     */
     public static Result newSession() {
         return ok(login.render(""));
     }
 
-    // Creates new session(performs the 'login' action)
+    /**
+     * POST route- performs the 'login' action
+     *
+     * @return Creates a new session which is stored by the {@link User} object, and the session
+     *         id is passed to the client browser in a cookie.
+     */
     public static Result createSession() {
         Map<String, String[]> values = request().body().asFormUrlEncoded();
         String email = values.get("email")[0];
@@ -30,7 +41,13 @@ public class SessionController extends Controller {
         return badRequest(login.render(""));
     }
 
-    //
+    /**
+     * GET route- Performs 'logout' function
+     *
+     * @param sessionID (Optional) If provided as query parameter, deletes given session. If not
+     *                  provided, logs out current users session
+     * @return deletes session, redirects to Twatter home page
+     */
     public static Result deleteSession(String sessionID) {
         if(sessionID != null) {
             UserController.getUserFromSessionID(sessionID).deleteSession(sessionID);

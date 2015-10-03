@@ -8,7 +8,10 @@ import model.PostListener;
 import play.libs.Json;
 
 /**
- * Created by jackson on 27/09/15.
+ * Websocket actor, based on that provided in the tutorial.
+ *
+ * @author Jackson Cleary
+ * @author William Billingsly
  */
 public class PostWebSocketActor extends UntypedActor {
     /**

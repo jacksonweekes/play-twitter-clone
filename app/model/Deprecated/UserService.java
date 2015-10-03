@@ -7,12 +7,18 @@ import model.User;
 import model.UserDataInterface;
 
 /**
- * Created by jackson on 13/08/15.
- * Deprecated- Use MongoUserService instead
+ * In memory data store for Users
+ *
+ * @author Jackson Cleary
+ * @deprecated - Use {@link model.MongoUserService} instead
  */
 public class UserService implements UserDataInterface {
-    public static final UserService instance = new UserService();
+    private static final UserService instance = new UserService();
     private ConcurrentHashMap<String, User> users = new ConcurrentHashMap<>();
+
+    public UserService getInstance() {
+        return instance;
+    }
 
     // Returns array of all registered users
     public User[] getUserArray() {

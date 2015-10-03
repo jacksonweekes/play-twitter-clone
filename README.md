@@ -8,26 +8,6 @@ My port on turing: 50755
 
 Folder on turing: ~/comp391/jacksonweekes-assignment2015
 
-All the requirements of the assignment have been met. The landing page purposefully does not include links to all the features directly as many of the pages require user authentication, however once logging in all the features are readily available. Searching, posting and session management functionality are all shown on the user page. I have conciously implemented the system so that only logged in users can see other users posts or profiles.
+Javadocs for this project can be viewed online at https://uneadvancedweb.github.io/jacksonweekes-assignment2015/
 
-I have included some seed data, which is loaded up in onStart in app/Global.java. Comment out the relevent code in this file to stop this data loading on application start.
-
-Pre-seeded users: bob@example.com, jack@example.com, jill@example.com, jan@example.com, all with password 'password'
-
-I have included some tests, which can be run using 'sbt test'. This is by no means exhaustive however much of the important functionality is tested.
-
-
-# TODO
-
-*provide more complete test coverage, refactor existing tests
-
-*code cleanup
-
-*use play.mvc.Controller.Form objects for input forms to improve validation checks
-
-
-# Tasks completed since A1 submission
-
-*added hyperlinked tags to posts
-
-*findIPLocation(Session.java) now works correctly, calling json api at ip-api.com. Will return 'Unknown' on localhost, however by uncommenting appropriate line in method this can be tested. Should work correctly on a production server.
+All the requirements of the assignment have been met, with MongoDB now providing the datastore and ReactJS is used to create a single page app version of the application, at {host}/spa. The SPA requires a user to be authenticated to access it, and a user can only post when on their own post list. Websockets are used to maintain a connection between server and client, with new posts sent to subscribing clients.

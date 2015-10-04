@@ -34,7 +34,8 @@ public class Session {
         this.id = MongoProvider.allocateObjectID();
         this.ipAddress = ipAddress;
         this.since = System.currentTimeMillis();
-        this.location = findIPLocation(ipAddress);
+        this.location = "Unknown";
+        //this.location = findIPLocation(ipAddress);
     }
 
     /**
@@ -77,7 +78,7 @@ public class Session {
      * Uses http://ip-api.com to find the users location based off their ip address
      *
      * @param ipAddress the ip address to find the location of
-     * @return the approximate location of the ip address, or 'unknown' if can't be determined
+     * @return the approximate location of the ip address, or 'Unknown' if can't be determined
      */
     public static String findIPLocation(String ipAddress) {
         String city;

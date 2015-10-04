@@ -149,7 +149,7 @@ var PostList = React.createClass({
         // Map props.data to PostItem components
         var postNodes = this.props.data.map(function (post) {
             return (
-                <PostItem author={'@' + post.username} tags={post.tags}>
+                <PostItem key={post.postID} author={'@' + post.username} tags={post.tags}>
                     {post.message}
                 </PostItem>
             );

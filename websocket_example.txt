@@ -1,0 +1,64 @@
+# Jackson Cleary
+## Request Header - Generated from Chrome ##
+
+# Define request method as GET, defines request-uri including query string parameters, defines the HTTP version of the request as HTTP/1.1
+GET ws://localhost:9000/ws?searchTerm=bob&searchType=users HTTP/1.1
+
+# The name of the server and the port on which it is listening
+Host: localhost:9000
+
+# Request to upgrade to a different protocol once the HTTP connection is made
+Connection: Upgrade
+
+# Lets the server(and intermediate caches) know that the requester wants a fresh version of the resource from the server. Has the same
+# effect as Cache-Control: no-cache however is defined in HTTP/1.0 so it can be understood by servers that don't implement HTTP/1.1
+Pragma: no-cache
+
+# As above, lets the server and intermediate caches know that the requester wants a fresh version of the resource from the server.
+# Unlike Pragma: no-cache, it is defined from HTTP/1.1
+Cache-Control: no-cache
+
+# Defines the protocol that the requester wishes to update to(in this case the websocket protocol)
+Upgrade: websocket
+
+# Lets the server know the origin of the request, used to mitigate the risk of Cross-Site Request Forgery
+Origin: http://localhost:9000
+
+# Defines which version of the websocket protocol to use
+Sec-WebSocket-Version: 13
+
+# The user-agent string(Mozilla rendering engine compatible, client using X Window System, Linux OS on Intel 64bit processor,
+# uses AppleWebKit 537.36, uses KHTML layout engine, browser is Chrome 45... based on Safari 537.36
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36
+
+# List of acceptable response encodings
+Accept-Encoding: gzip, deflate, sdch
+
+# List of languages the client will accept(US English preferred, then English with weight of 0.8)
+Accept-Language: en-US,en;q=0.8
+
+# The HTTP cookie previously set by the server, includes the session_id which is used to determine the current user
+Cookie: PLAY_SESSION=0463d54f99c71b417a8bce6ac181f210324df787-session_id=560fcd34f922d342248b261f
+
+# This value will be used by the server(along with the Globally Unique Identifier defined in RFC6455) to prove to the client
+# that it recieved the client's WebSocket handshake
+Sec-WebSocket-Key: c7uog5lW5AyqyBk5XslksQ==
+
+# Request to use permessage-deflate extension(which compresses the payload of a message using the DEFLATE algorithm), with the
+# extension parameter client_max_windows_bits
+Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
+
+## Response Header ##
+
+# Response code, lets the client know that the server is switching protocols
+HTTP/1.1 101 Switching Protocols
+
+# The protocol the connection is changing to
+Upgrade: websocket
+
+# Confirm to client that the connection protocol is changing
+Connection: Upgrade
+
+# Confirms to client that the server recieved the clients WebSocket handshake. This value is a base-64 encoding of a SHA-1 hash
+# of the concatination of the Sec-Websocket-Key sent by the client and the Globally Unique Identifier "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
+Sec-WebSocket-Accept: hQBffUd8t/ek1X5u2Wfs5uqSUOw=

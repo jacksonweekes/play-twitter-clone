@@ -44,7 +44,7 @@ public class CustomAuthenticator extends Security.Authenticator {
 
     /**
      * Returns a user object of the current user
-     *
+     * TODO remove?
      * @param ctx Http context of request
      * @return User object representing the current user
      */

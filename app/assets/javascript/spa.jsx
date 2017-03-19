@@ -232,10 +232,10 @@ var SearchPanel = React.createClass({
  ************************/
 
 /*************************************************************************************
- * TwatterApp - This is the main component which is mounted when the page is loaded. *
+ * ChirperApp - This is the main component which is mounted when the page is loaded. *
  * It manages all the other components, passing data from the API.                   *
  ************************************************************************************/
-var TwatterApp = React.createClass({
+var ChirperApp = React.createClass({
     /**
      * Loads posts from server
      */
@@ -251,7 +251,7 @@ var TwatterApp = React.createClass({
         return {data: []}
     },
     /**
-     * Called when TwatterApp has successfully loaded, calls loadPostsFromServer then rerenders
+     * Called when ChirperApp has successfully loaded, calls loadPostsFromServer then rerenders
      */
     componentDidMount: function () {
         this.loadPostsFromServer();
@@ -267,7 +267,7 @@ var TwatterApp = React.createClass({
     },
     /**
      * The render function that generates the XML display information
-     * @returns the display information for the TwatterApp component
+     * @returns the display information for the ChirperApp component
      */
     render: function () {
         var postForm;
@@ -281,7 +281,7 @@ var TwatterApp = React.createClass({
         }
 
         return (
-            <div className="twatterapp">
+            <div className="chirperapp">
                 <SearchPanel onSearch={window.doSearch}/>
                 <InfoPanel userDetails={window.userDetails}/>
                 {postForm}
@@ -295,7 +295,7 @@ var TwatterApp = React.createClass({
  * Causes React to rerender the page
  */
 var rerender = function () {
-    React.render(<TwatterApp />, mountNode);
+    React.render(<ChirperApp />, mountNode);
 }
 
 rerender();

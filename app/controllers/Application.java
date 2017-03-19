@@ -20,7 +20,7 @@ public class Application extends Controller {
     /**
      * Index page for unauthorized users.
      *
-     * @return Home page of Twatter application
+     * @return Home page of Chirper application
      */
     public static Result index() {
         User user = UserController
@@ -37,7 +37,7 @@ public class Application extends Controller {
     /**
      * Single Page App. User must be authenticated to access.
      *
-     * @return Single Page App version of Twatter
+     * @return Single Page App version of Chirper
      */
     @Security.Authenticated(CustomAuthenticator.class)
     public static Result singlePageApp() {
@@ -48,7 +48,7 @@ public class Application extends Controller {
     /**
      * About page
      *
-     * @return General information page about Twatter
+     * @return General information page about Chirper
      */
     public static Result about() {
         return ok(about.render());

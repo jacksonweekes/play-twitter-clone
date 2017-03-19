@@ -17,7 +17,7 @@ public class UserController extends Controller {
      * {@link model.Deprecated.UserService} implement UserDataInterface, by changing the return to
      * {@link model.Deprecated.UserService#getInstance()} you are able to switch to the in-memory data store.
      *
-     * @return The user data store to be used by Twatter
+     * @return The user data store to be used by Chirper
      */
     public static UserDataInterface getUserService() {
         // return UserService.instance;
@@ -57,7 +57,7 @@ public class UserController extends Controller {
                 return redirect(routes.UserController.newUser());
         }
         session(SessionController.SESSION_VAR, u.createNewSession());
-        flash("success", "Hi " + u.getUsername() + ", welcome to Twatter!");
+        flash("success", "Hi " + u.getUsername() + ", welcome to Chirper!");
         return redirect(routes.Application.index());
     }
 

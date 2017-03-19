@@ -11,7 +11,7 @@ import java.util.List;
 import play.libs.Json;
 
 /**
- * This is the API controller for the Twatter app.
+ * This is the API controller for the Chirper app.
  *
  * @author Jackson Cleary
  */

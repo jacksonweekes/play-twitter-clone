@@ -6,7 +6,7 @@ import views.html.sessions.login;
 
 import java.util.*;
 /**
- * Session controller for Twatter, handles login/logout.
+ * Session controller for Chirper, handles login/logout.
  *
  * @author Jackson Cleary
  */
@@ -46,7 +46,7 @@ public class SessionController extends Controller {
      *
      * @param sessionID (Optional) If provided as query parameter, deletes given session. If not
      *                  provided, logs out current users session
-     * @return deletes session, redirects to Twatter home page
+     * @return deletes session, redirects to Chirper home page
      */
     public static Result deleteSession(String sessionID) {
         if(sessionID != null) {

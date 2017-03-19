@@ -34,21 +34,21 @@ public class MongoProvider {
     }
 
     /**
-     * Gets the Twatter user collection
+     * Gets the Chirper user collection
      *
-     * @return reference to the twatter_users collection in db
+     * @return reference to the chirper_users collection in db
      */
     protected MongoCollection<Document> getUserCollection() {
-        return getDB().getCollection("twatter_users");
+        return getDB().getCollection("chirper_users");
     }
 
     /**
-     * Gets the Twatter post collection
+     * Gets the Chirper post collection
      *
-     * @return reference to the twatter_posts collection in db
+     * @return reference to the chirper_posts collection in db
      */
     protected MongoCollection<Document> getPostCollection() {
-        return getDB().getCollection("twatter_posts");
+        return getDB().getCollection("chirper_posts");
     }
 
     /**

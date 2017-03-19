@@ -3,7 +3,7 @@
 
 <header class="navbar navbar-fixed-top navbar-inverse">
     <div class="container">
-        <a href="@routes.Application.index()" id="logo">twatter</a>
+        <a href="@routes.Application.index()" id="logo">chirper</a>
         @if(UserController.getUserFromSessionID(session.get(SessionController.SESSION_VAR)) != null) {
             <nav>
                 <ul class="nav navbar-nav navbar-right">

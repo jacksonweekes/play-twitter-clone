@@ -20,14 +20,14 @@ public class PostController extends Controller {
      * {@link model.Deprecated.PostService} implement PostDataInterface, by changing the return to
      * {@link model.Deprecated.PostService#getInstance()} you are able to switch to the in-memory data store.
      *
-     * @return The post data store to be used by Twatter
+     * @return The post data store to be used by Chirper
      */
     public static PostDataInterface getPostService() {
         return MongoPostService.getInstance();
     }
 
     /**
-     * POST route, for creating new Twatter posts. Requester must be authenticated.
+     * POST route, for creating new Chirper posts. Requester must be authenticated.
      *
      * @return Creates new post for authenticated user, redirects to user's home page
      */

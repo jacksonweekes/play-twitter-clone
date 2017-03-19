@@ -8,7 +8,7 @@ import play.mvc.Security;
 import static play.mvc.Controller.flash;
 
 /**
- * Extends {@link play.mvc.Security.Authenticator} to provide authentication for the Twatter app.
+ * Extends {@link play.mvc.Security.Authenticator} to provide authentication for the Chirper app.
  * Is passed as parameter to {@link play.mvc.Security.Authenticated} annotation for any
  * pages that require user to be logged in(not for API however).
  *
